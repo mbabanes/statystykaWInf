@@ -116,4 +116,13 @@ public abstract class Province
     {
         this.listOfPlant = listOfPlant;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Province{" +
+                "name='" + name + '\'' +
+                ", listOfPlant=" + listOfPlant +
+                '}';
+    }
 }
