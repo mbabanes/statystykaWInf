@@ -24,7 +24,7 @@ public class PlantTest
         Plant potatoes = Plant.createPlant("ziemniaki");
         Assert.assertTrue( (potatoes instanceof Potatoes)  );
 
-        Plant sugarBeets = Plant.createPlant("burakiCukrowe");
+        Plant sugarBeets = Plant.createPlant("Buraki Cukrowe");
         Assert.assertTrue( (sugarBeets instanceof SugarBeets)  );
     }
 }
