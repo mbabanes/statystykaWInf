@@ -1,6 +1,8 @@
 package loader;
 
+import entity.provinces.Province;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -8,29 +10,41 @@ import java.util.ArrayList;
 
 public class DataParserTest
 {
+    private LoadData loadData;
+    private File dataFile;
+    private ArrayList<String> loadedData;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        dataFile = new File(this.getClass().getResource("/Dane.csv").getFile());
+        loadData = new LoadData(dataFile);
+        loadedData = loadData.getLoadedData();
+    }
+
     @Test
     public void whenPutDataThenIsSet() throws Exception
     {
-        File dataFile = new File(this.getClass().getResource("/Dane.csv").getFile());
-        LoadData loadData = new LoadData(dataFile);
-
-        ArrayList<String> loadedData = loadData.getLoadedData();
-
         DataParser dataParser = new DataParser(loadedData);
         int expected = loadedData.size();
-        int actual = dataParser.getData().size();
+        int actual = dataParser.getDataFromCSV().size();
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void whenParseDataThenGetArrayListOfRecords() throws Exception
     {
-        File dataFile = new File(this.getClass().getResource("/Dane.csv").getFile());
-        LoadData loadData = new LoadData(dataFile);
-
-        ArrayList<String> loadedData = loadData.getLoadedData();
         DataParser dataParser = new DataParser(loadedData);
-//        ArrayList<String> actual = dataParser.parse();
+        ArrayList<Province> list = dataParser.parse();
+
+        list.forEach((province -> {
+            System.out.println(province);
+        }));
+
+        int actual = list.size();
+        int expected = 16;
+
+        Assert.assertEquals(expected, actual);
     }
 
 }
