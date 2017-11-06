@@ -11,7 +11,7 @@ public abstract class Plant
 
     public static Plant createPlant(String name)
     {
-        switch(name)
+        switch(name.toLowerCase())
         {
             case "pszenica":
             {
@@ -38,7 +38,7 @@ public abstract class Plant
                 return new Potatoes();
             }
 
-            case "burakiCukrowe":
+            case "buraki cukrowe":
             {
                 return new SugarBeets();
             }
@@ -64,5 +64,14 @@ public abstract class Plant
     public void setQuantity(long quantity)
     {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Plant{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                '}';
     }
 }
