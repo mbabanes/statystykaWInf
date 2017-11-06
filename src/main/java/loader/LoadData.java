@@ -11,11 +11,12 @@ import java.util.regex.Pattern;
 public class LoadData
 {
     private File dataFile;
+    private ArrayList<String> data;
 
     public LoadData(File dataFile) throws IOException
     {
-        Pattern patternForCSVFilePath = Pattern.compile(".*\\.csv");
-        if (!patternForCSVFilePath.matcher(dataFile.getPath()).matches())
+
+        if ( isNoCSVFile(dataFile) )
         {
             throw new IOException("Zły plik");
         }
@@ -25,6 +26,7 @@ public class LoadData
         }
     }
 
+
     public ArrayList<String> getLoadedData() throws IOException
     {
         return readDataFromFile();
@@ -33,19 +35,30 @@ public class LoadData
 
     private ArrayList<String> readDataFromFile() throws IOException
     {
-        ArrayList<String> lines = new ArrayList<>(18);
+        data = new ArrayList<>();
 
+        readData();
+
+        return data;
+    }
+
+
+    private boolean isNoCSVFile(File dataFile)
+    {
+        Pattern patternForCSVFilePath = Pattern.compile(".*\\.csv");
+        return !patternForCSVFilePath.matcher(dataFile.getPath()).matches();
+    }
+
+    private void readData() throws IOException
+    {
         try(Scanner csvFile = new Scanner(new FileInputStream(dataFile)))
         {
             while(csvFile.hasNext())
             {
-                lines.add(csvFile.nextLine());
+                data.add(csvFile.nextLine());
             }
         }
-
-        return lines;
     }
-
 
     protected File getDataFile()
     {
