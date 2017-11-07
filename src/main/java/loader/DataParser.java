@@ -10,12 +10,15 @@ public class DataParser
     private static final String SEPARATOR = ";";
     private static final int PROVINCE_NAME = 0;
     private static final int FIRST_LINE = 0;
+    private static final int WHEAT = 1;
+    private static final int RYE_COL = 2;
+    private static final int BARLEY_COL = 3;
+    private static final int OAT_COL = 4;
+    private static final int POTATOES_COL = 5;
+    private static final int SUGAR_BEETS_COL = 6;
+
     private ArrayList<String> dataFromCSV;
 
-    private enum Plants
-    {
-        WHEAT, RYE, BARLEY, OATS, POTATOES, SUGAR_BEETS;
-    }
 
     public DataParser(ArrayList<String> dataFromCSV)
     {
@@ -36,6 +39,7 @@ public class DataParser
     private ArrayList<Province> parseData()
     {
         ArrayList<Province> data = new ArrayList<>();
+
         for (int i = 1; i < this.dataFromCSV.size(); i++)
         {
             data.add( createDataRow(i) );
@@ -47,12 +51,7 @@ public class DataParser
     private Province createDataRow(int i)
     {
         String[] dataLine = takeLine(i);
-        Province province = createProvince(dataLine);
-
-//        ArrayList<Plant> listOfPlants = createListOfPlants(dataLine);
-
-//        province.setListOfPlant(listOfPlants);
-        return province;
+        return  createProvince(dataLine);
     }
 
 
@@ -61,16 +60,14 @@ public class DataParser
     {
         Province province = Province.createProvince(dataLine[PROVINCE_NAME]);
         province.setName(dataLine[PROVINCE_NAME]);
-
         String[] plantNames = takeLine(FIRST_LINE);
 
-
-        province.setWheat(createPlant(plantNames[1], dataLine[1]));
-        province.setRye(createPlant(plantNames[2], dataLine[2]));
-        province.setBarley(createPlant(plantNames[3], dataLine[3]));
-        province.setOats(createPlant(plantNames[4], dataLine[4]));
-        province.setPotatoes(createPlant(plantNames[5], dataLine[5]));
-        province.setSugarBeets(createPlant(plantNames[1], dataLine[6]));
+        province.setWheat(createPlant(plantNames[WHEAT], dataLine[WHEAT]));
+        province.setRye(createPlant(plantNames[RYE_COL], dataLine[RYE_COL]));
+        province.setBarley(createPlant(plantNames[BARLEY_COL], dataLine[BARLEY_COL]));
+        province.setOat(createPlant(plantNames[OAT_COL], dataLine[OAT_COL]));
+        province.setPotatoes(createPlant(plantNames[POTATOES_COL], dataLine[POTATOES_COL]));
+        province.setSugarBeets(createPlant(plantNames[SUGAR_BEETS_COL], dataLine[SUGAR_BEETS_COL]));
         return province;
     }
 
