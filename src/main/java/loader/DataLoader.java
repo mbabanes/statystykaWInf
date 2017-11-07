@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class LoadData
+public class DataLoader
 {
     private File dataFile;
     private ArrayList<String> data;
 
-    public LoadData(File dataFile) throws IOException
+    public DataLoader(File dataFile) throws IOException
     {
-
         if ( isNoCSVFile(dataFile) )
         {
             throw new IOException("Zły plik");
