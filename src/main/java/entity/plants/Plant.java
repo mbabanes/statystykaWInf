@@ -3,10 +3,15 @@ package entity.plants;
 //        pszenica;żyto;jęczmień;owies;ziemniaki;burakiCukrowe;
 //        wheat, rye, barley, oats, potatoes, sugar beets;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public abstract class Plant
 {
-    private String name;
-    private long quantity;
+    private StringProperty name = new SimpleStringProperty();
+    private LongProperty quantity = new SimpleLongProperty();
 
 
     public static Plant createPlant(String name)
@@ -48,29 +53,39 @@ public abstract class Plant
 
     public String getName()
     {
+        return name.get();
+    }
+
+    public StringProperty nameProperty()
+    {
         return name;
     }
 
     public void setName(String name)
     {
-        this.name = name;
+        this.name.set(name);
     }
 
     public long getQuantity()
+    {
+        return quantity.get();
+    }
+
+    public LongProperty quantityProperty()
     {
         return quantity;
     }
 
     public void setQuantity(long quantity)
     {
-        this.quantity = quantity;
+        this.quantity.set(quantity);
     }
 
     @Override
     public String toString()
     {
         return "Plant{" +
-                "name='" + name + '\'' +
+                "name=" + name +
                 ", quantity=" + quantity +
                 '}';
     }
