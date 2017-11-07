@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DataParserTest
 {
-    private LoadData loadData;
+    private DataLoader dataLoader;
     private File dataFile;
     private ArrayList<String> loadedData;
 
@@ -18,8 +18,8 @@ public class DataParserTest
     public void setUp() throws Exception
     {
         dataFile = new File(this.getClass().getResource("/Dane.csv").getFile());
-        loadData = new LoadData(dataFile);
-        loadedData = loadData.getLoadedData();
+        dataLoader = new DataLoader(dataFile);
+        loadedData = dataLoader.getLoadedData();
     }
 
     @Test

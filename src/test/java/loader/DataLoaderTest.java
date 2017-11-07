@@ -9,21 +9,20 @@ import org.junit.rules.ExpectedException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class LoadDataTest
+public class DataLoaderTest
 {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     File dataFile;
-    LoadData loadData;
+    DataLoader dataLoader;
 
     @Before
     public void setUp() throws IOException
     {
         dataFile = new File(this.getClass().getResource("/Dane.csv").getPath());
-        loadData = new LoadData(dataFile);
+        dataLoader = new DataLoader(dataFile);
     }
 
     @Test
@@ -31,21 +30,21 @@ public class LoadDataTest
     {
         File wrongDataFile = new File("c:/File.txt");
         exception.expect(IOException.class);
-        LoadData loadData = new LoadData(wrongDataFile);
+        DataLoader dataLoader = new DataLoader(wrongDataFile);
     }
 
 
     @Test
     public void whenFilePathIsCorrectThenPathIsSet() throws IOException
     {
-        Assert.assertEquals(dataFile.getPath(), loadData.getDataFile().getPath());
+        Assert.assertEquals(dataFile.getPath(), dataLoader.getDataFile().getPath());
     }
 
 
     @Test
     public void whenGetLoadedDataThenReturnListOfStrings() throws IOException
     {
-        ArrayList<String> actual = loadData.getLoadedData();
+        ArrayList<String> actual = dataLoader.getLoadedData();
         Assert.assertTrue(actual.size() > 0 );
     }
 }
