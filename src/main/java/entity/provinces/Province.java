@@ -32,7 +32,7 @@ public abstract class Province
 
     public static Province createProvince(String name)
     {
-        switch(name)
+        switch(name.toUpperCase())
         {
             case "DOLNOŚLĄSKIE":
             {
