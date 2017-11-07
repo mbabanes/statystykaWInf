@@ -12,6 +12,10 @@ public class DataParser
     private static final int FIRST_LINE = 0;
     private ArrayList<String> dataFromCSV;
 
+    private enum Plants
+    {
+        WHEAT, RYE, BARLEY, OATS, POTATOES, SUGAR_BEETS;
+    }
 
     public DataParser(ArrayList<String> dataFromCSV)
     {
@@ -43,20 +47,30 @@ public class DataParser
     private Province createDataRow(int i)
     {
         String[] dataLine = takeLine(i);
-        Province province = createProvince(dataLine[PROVINCE_NAME]);
+        Province province = createProvince(dataLine);
 
-        ArrayList<Plant> listOfPlants = createListOfPlants(dataLine);
+//        ArrayList<Plant> listOfPlants = createListOfPlants(dataLine);
 
-        province.setListOfPlant(listOfPlants);
+//        province.setListOfPlant(listOfPlants);
         return province;
     }
 
 
 
-    private Province createProvince(String name)
+    private Province createProvince(String[] dataLine)
     {
-        Province province = Province.createProvince(name);
-        province.setName(name);
+        Province province = Province.createProvince(dataLine[PROVINCE_NAME]);
+        province.setName(dataLine[PROVINCE_NAME]);
+
+        String[] plantNames = takeLine(FIRST_LINE);
+
+
+        province.setWheat(createPlant(plantNames[1], dataLine[1]));
+        province.setRye(createPlant(plantNames[2], dataLine[2]));
+        province.setBarley(createPlant(plantNames[3], dataLine[3]));
+        province.setOats(createPlant(plantNames[4], dataLine[4]));
+        province.setPotatoes(createPlant(plantNames[5], dataLine[5]));
+        province.setSugarBeets(createPlant(plantNames[1], dataLine[6]));
         return province;
     }
 
