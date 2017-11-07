@@ -1,13 +1,33 @@
 package entity.provinces;
 
 import entity.plants.Plant;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.List;
 
+//        pszenica;żyto;jęczmień;owies;ziemniaki;burakiCukrowe;
+//        wheat, rye, barley, oats, potatoes, sugar beets;
+
 public abstract class Province
 {
-    private String name;
+//    private String name;
     private List<Plant> listOfPlant;
+    private ObjectProperty<Plant> wheat = new SimpleObjectProperty<>();
+    private ObjectProperty<Plant> rye = new SimpleObjectProperty<>();
+    private ObjectProperty<Plant> barley = new SimpleObjectProperty<>();
+    private ObjectProperty<Plant> oats = new SimpleObjectProperty<>();
+    private ObjectProperty<Plant> potatoes = new SimpleObjectProperty<>();
+    private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
+
+
+
+
+
+
+    private StringProperty name = new SimpleStringProperty();
 
 
     public static Province createProvince(String name)
@@ -97,14 +117,30 @@ public abstract class Province
         return null;
     }
 
+//    public String getName()
+//    {
+//        return name;
+//    }
+//
+//    public void setName(String name)
+//    {
+//        this.name = name;
+//    }
+
+
     public String getName()
+    {
+        return name.get();
+    }
+
+    public StringProperty nameProperty()
     {
         return name;
     }
 
     public void setName(String name)
     {
-        this.name = name;
+        this.name.set(name);
     }
 
     public List<Plant> getListOfPlant()
@@ -117,12 +153,108 @@ public abstract class Province
         this.listOfPlant = listOfPlant;
     }
 
+    public Plant getWheat()
+    {
+        return wheat.get();
+    }
+
+    public ObjectProperty<Plant> wheatProperty()
+    {
+        return wheat;
+    }
+
+    public void setWheat(Plant wheat)
+    {
+        this.wheat.set(wheat);
+    }
+
+    public Plant getRye()
+    {
+        return rye.get();
+    }
+
+    public ObjectProperty<Plant> ryeProperty()
+    {
+        return rye;
+    }
+
+    public void setRye(Plant rye)
+    {
+        this.rye.set(rye);
+    }
+
+    public Plant getBarley()
+    {
+        return barley.get();
+    }
+
+    public ObjectProperty<Plant> barleyProperty()
+    {
+        return barley;
+    }
+
+    public void setBarley(Plant barley)
+    {
+        this.barley.set(barley);
+    }
+
+    public Plant getOats()
+    {
+        return oats.get();
+    }
+
+    public ObjectProperty<Plant> oatsProperty()
+    {
+        return oats;
+    }
+
+    public void setOats(Plant oats)
+    {
+        this.oats.set(oats);
+    }
+
+    public Plant getPotatoes()
+    {
+        return potatoes.get();
+    }
+
+    public ObjectProperty<Plant> potatoesProperty()
+    {
+        return potatoes;
+    }
+
+    public void setPotatoes(Plant potatoes)
+    {
+        this.potatoes.set(potatoes);
+    }
+
+    public Plant getSugarBeets()
+    {
+        return sugarBeets.get();
+    }
+
+    public ObjectProperty<Plant> sugarBeetsProperty()
+    {
+        return sugarBeets;
+    }
+
+    public void setSugarBeets(Plant sugarBeets)
+    {
+        this.sugarBeets.set(sugarBeets);
+    }
+
     @Override
     public String toString()
     {
         return "Province{" +
-                "name='" + name + '\'' +
-                ", listOfPlant=" + listOfPlant +
+                "listOfPlant=" + listOfPlant +
+                ", wheat=" + wheat +
+                ", rye=" + rye +
+                ", barley=" + barley +
+                ", oats=" + oats +
+                ", potatoes=" + potatoes +
+                ", sugarBeets=" + sugarBeets +
+                ", name=" + name +
                 '}';
     }
 }
