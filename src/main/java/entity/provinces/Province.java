@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 import java.util.List;
 
 //        pszenica;żyto;jęczmień;owies;ziemniaki;burakiCukrowe;
-//        wheat, rye, barley, oats, potatoes, sugar beets;
+//        wheat, rye, barley, oat, potatoes, sugar beets;
 
 public abstract class Province
 {
@@ -18,7 +18,7 @@ public abstract class Province
     private ObjectProperty<Plant> wheat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> rye = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> barley = new SimpleObjectProperty<>();
-    private ObjectProperty<Plant> oats = new SimpleObjectProperty<>();
+    private ObjectProperty<Plant> oat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> potatoes = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
 
@@ -198,19 +198,19 @@ public abstract class Province
         this.barley.set(barley);
     }
 
-    public Plant getOats()
+    public Plant getOat()
     {
-        return oats.get();
+        return oat.get();
     }
 
-    public ObjectProperty<Plant> oatsProperty()
+    public ObjectProperty<Plant> oatProperty()
     {
-        return oats;
+        return oat;
     }
 
-    public void setOats(Plant oats)
+    public void setOat(Plant oat)
     {
-        this.oats.set(oats);
+        this.oat.set(oat);
     }
 
     public Plant getPotatoes()
@@ -251,7 +251,7 @@ public abstract class Province
                 ", wheat=" + wheat +
                 ", rye=" + rye +
                 ", barley=" + barley +
-                ", oats=" + oats +
+                ", oat=" + oat +
                 ", potatoes=" + potatoes +
                 ", sugarBeets=" + sugarBeets +
                 ", name=" + name +
