@@ -19,7 +19,10 @@ public class WindowController
     private TableView<Province> plantsTable;
 
     @FXML
-    private TableColumn<Province, String> provvinceCol;
+    private TableColumn<Province, String> provinceCol;
+
+    @FXML
+    private TableColumn<Province, Number> areaColumn;
 
     @FXML
     private TableColumn<Province, Number> wheatCol;
@@ -50,7 +53,8 @@ public class WindowController
         {
             dataSetModel.loadData();
             plantsTable.setItems(dataSetModel.getDataList());
-            this.provvinceCol.setCellValueFactory(param -> param.getValue().nameProperty());
+            this.provinceCol.setCellValueFactory(param -> param.getValue().nameProperty());
+            this.areaColumn.setCellValueFactory(param -> param.getValue().areaProperty());
             this.wheatCol.setCellValueFactory(value -> value.getValue().wheatProperty().get().quantityProperty());
             this.ryeCol.setCellValueFactory(value -> value.getValue().ryeProperty().get().quantityProperty());
             this.barleyCol.setCellValueFactory(value -> value.getValue().barleyProperty().get().quantityProperty());
