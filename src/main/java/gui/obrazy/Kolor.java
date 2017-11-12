@@ -49,8 +49,11 @@ public class Kolor {
             {
                 Color c = pixelReader.getColor(j,i);
                 int a = pixelReader.getArgb(j,i);
-                pixelWriter.setColor(x+j,y+i,c);
-                pixelWriter.setArgb(x+j,y+i,a);
+                if (a != 0)
+                {
+                    pixelWriter.setColor(x + j, y + i, c);
+                    pixelWriter.setArgb(x + j, y + i, a);
+                }
             }
         }
         return writableImage;
