@@ -13,6 +13,8 @@ public abstract class Plant
     private StringProperty name = new SimpleStringProperty();
     private LongProperty quantity = new SimpleLongProperty();
 
+    protected String imagePath;
+
 
     public static Plant createPlant(String name)
     {
@@ -89,4 +91,10 @@ public abstract class Plant
                 ", quantity=" + quantity +
                 '}';
     }
+
+    public String getImagePath()
+    {
+        return imagePath;
+    }
+
 }

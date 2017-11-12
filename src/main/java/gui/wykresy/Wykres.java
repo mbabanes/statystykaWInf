@@ -166,35 +166,15 @@ public class Wykres {
 
         String sc1 = "";
 
-        switch (pk.getName())
-        {
-            case "Buraki Cukrowe": sc1 = "/img/burak.png"; break;
-            case "Żyto": sc1 = "/img/zyto.png"; break;
-            case "Jęczmień": sc1 = "/img/jeczmien.png"; break;
-            case "Owies": sc1 = "/img/owies.png"; break;
-            case "Ziemniaki": sc1 = "/img/ziemniak.png"; break;
-            case "Pszenica": sc1 = "/img/pszenica.png"; break;
-            default: sc1 = "/img/polska.png";
-        }
-//        System.out.println(sc1+" "+pk.getName());
-         top1 = new Image(sc1);
+        sc1 = pk.getImagePath();
+        top1 = new Image(sc1);
 
-        sc1 = "";
-        switch (pk2.getName())
-        {
-            case "Buraki Cukrowe": sc1 = "/img/burak.png"; break;
-            case "Żyto": sc1 = "/img/zyto.png"; break;
-            case "Jęczmień": sc1 = "/img/jeczmien.png"; break;
-            case "Owies": sc1 = "/img/owies.png"; break;
-            case "Ziemniaki": sc1 = "/img/ziemniak.png"; break;
-            case "Pszenica": sc1 = "/img/pszenica.png"; break;
-            default: sc1 = "/img/polska.png";
-        }
-
-         top2 = new Image(sc1);
+        sc1 = pk2.getImagePath();
+        top2 = new Image(sc1);
     }
 
     public Image getTop1() {
+
         return top1;
     }
 
@@ -211,7 +191,5 @@ public class Wykres {
         listaPlants.add(province.getSugarBeets());
         listaPlants.add(province.getWheat());
     }
-
-
 }
 
