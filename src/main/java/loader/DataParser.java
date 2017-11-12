@@ -16,6 +16,7 @@ public class DataParser
     private static final int OAT_COL = 5;
     private static final int POTATOES_COL = 6;
     private static final int SUGAR_BEETS_COL = 7;
+    private static final int PROVINCE_AREA = 1;
 
     private ArrayList<String> dataFromCSV;
 
@@ -60,7 +61,7 @@ public class DataParser
     {
         Province province = Province.createProvince(dataLine[PROVINCE_NAME]);
         province.setName(dataLine[PROVINCE_NAME]);
-        province.setArea(Float.parseFloat(dataLine[1]));
+        province.setArea(Float.parseFloat(dataLine[PROVINCE_AREA]));
         String[] plantNames = takeLine(FIRST_LINE);
 
         province.setWheat(createPlant(plantNames[WHEAT_COL], dataLine[WHEAT_COL]));
