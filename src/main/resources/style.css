@@ -1,0 +1,56 @@
+#myBar {
+    -fx-background-color: rgba(0,168,355,0.05);
+    -fx-border-color: rgba(0,168,355,0.3) rgba(0,168,355,0.3) transparent rgba(0,168,355,0.3);
+    -fx-background-radius: 0;
+    -fx-background-position: left center;
+}
+
+#myBar .chart-bar {
+    -fx-background-color: rgba(255,255,0,1);
+    -fx-background-radius: 0;
+    -fx-background-position: left center;
+}
+
+#myBar .series0.data0.chart-bar {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-image: url("img/jeczmien.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+
+#myBar .series0.data1.chart-bar {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-image: url("img/burak.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#myBar .series0.data2.chart-bar {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-image: url("img/pszenica.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#myBar .series0.data3.chart-bar {
+    -fx-background-color: rgba(20,0,0,0);
+    -fx-background-image: url("img/owies.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#myBar .series0.data4.chart-bar {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-image: url("img/ziemniak.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#myBar .series0.data5.chart-bar {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-image: url("img/zyto.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+

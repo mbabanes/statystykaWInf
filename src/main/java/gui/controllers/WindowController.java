@@ -2,9 +2,14 @@ package gui.controllers;
 
 import entity.provinces.Province;
 import gui.model.DataSetModel;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -59,4 +64,32 @@ public class WindowController
             System.out.println("Error: " + e);
         }
     }
+
+    @FXML
+    public void wykresOknoAction()
+    {
+        //barley - jeczmien
+
+        Stage stage = new Stage();
+        stage.setTitle("Wykresik");
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(this.getClass().getResource("/fxml/wykres.fxml"));
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WykresController wykres = loader.getController();
+
+        ObservableList<Province> woj = plantsTable.getItems();
+        wykres.setWojewodztwa(woj);
+        wykres.setStage(stage);
+        wykres.dajWykres();
+        stage.setScene(new Scene(pane));
+        stage.show();
+    }
+
+
 }

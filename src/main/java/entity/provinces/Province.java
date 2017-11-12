@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public abstract class Province
     private ObjectProperty<Plant> oat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> potatoes = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
-
+    private Color kolorNaMapie;
 
 
 
@@ -241,6 +242,14 @@ public abstract class Province
     public void setSugarBeets(Plant sugarBeets)
     {
         this.sugarBeets.set(sugarBeets);
+    }
+
+    public Color getKolorNaMapie() {
+        return kolorNaMapie;
+    }
+
+    public void setKolorNaMapie(Color kolorNaMapie) {
+        this.kolorNaMapie = kolorNaMapie;
     }
 
     @Override

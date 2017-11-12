@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jfree:fxgraphics2d:1.6">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jfree/fxgraphics2d/1.6/178c895946b2464e9a9bd23d779eb43406b19440/fxgraphics2d-1.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jfree/fxgraphics2d/1.6/b373534fc342177a4c850eee0bbfd08d8423ac43/fxgraphics2d-1.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
