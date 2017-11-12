@@ -10,12 +10,13 @@ public class DataParser
     private static final String SEPARATOR = ";";
     private static final int PROVINCE_NAME = 0;
     private static final int FIRST_LINE = 0;
-    private static final int WHEAT = 1;
-    private static final int RYE_COL = 2;
-    private static final int BARLEY_COL = 3;
-    private static final int OAT_COL = 4;
-    private static final int POTATOES_COL = 5;
-    private static final int SUGAR_BEETS_COL = 6;
+    private static final int WHEAT_COL = 2;
+    private static final int RYE_COL = 3;
+    private static final int BARLEY_COL = 4;
+    private static final int OAT_COL = 5;
+    private static final int POTATOES_COL = 6;
+    private static final int SUGAR_BEETS_COL = 7;
+    private static final int PROVINCE_AREA = 1;
 
     private ArrayList<String> dataFromCSV;
 
@@ -60,9 +61,10 @@ public class DataParser
     {
         Province province = Province.createProvince(dataLine[PROVINCE_NAME]);
         province.setName(dataLine[PROVINCE_NAME]);
+        province.setArea(Float.parseFloat(dataLine[PROVINCE_AREA]));
         String[] plantNames = takeLine(FIRST_LINE);
 
-        province.setWheat(createPlant(plantNames[WHEAT], dataLine[WHEAT]));
+        province.setWheat(createPlant(plantNames[WHEAT_COL], dataLine[WHEAT_COL]));
         province.setRye(createPlant(plantNames[RYE_COL], dataLine[RYE_COL]));
         province.setBarley(createPlant(plantNames[BARLEY_COL], dataLine[BARLEY_COL]));
         province.setOat(createPlant(plantNames[OAT_COL], dataLine[OAT_COL]));

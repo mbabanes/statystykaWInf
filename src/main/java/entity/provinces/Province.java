@@ -1,10 +1,7 @@
 package entity.provinces;
 
 import entity.plants.Plant;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
 import java.util.List;
@@ -24,6 +21,8 @@ public abstract class Province
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
     private Color kolorNaMapie;
 
+
+    private FloatProperty area = new SimpleFloatProperty();
 
 
 
@@ -118,15 +117,6 @@ public abstract class Province
         return null;
     }
 
-//    public String getName()
-//    {
-//        return name;
-//    }
-//
-//    public void setName(String name)
-//    {
-//        this.name = name;
-//    }
 
 
     public String getName()
@@ -252,6 +242,21 @@ public abstract class Province
         this.kolorNaMapie = kolorNaMapie;
     }
 
+    public float getArea()
+    {
+        return area.get();
+    }
+
+    public FloatProperty areaProperty()
+    {
+        return area;
+    }
+
+    public void setArea(float area)
+    {
+        this.area.set(area);
+    }
+
     @Override
     public String toString()
     {
@@ -263,6 +268,8 @@ public abstract class Province
                 ", oat=" + oat +
                 ", potatoes=" + potatoes +
                 ", sugarBeets=" + sugarBeets +
+                ", kolorNaMapie=" + kolorNaMapie +
+                ", area=" + area +
                 ", name=" + name +
                 '}';
     }
