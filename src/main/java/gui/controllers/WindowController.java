@@ -8,8 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DefaultStringConverter;
 
 import java.io.IOException;
 
@@ -31,7 +33,7 @@ public class WindowController
     private TableColumn<Province, Number> ryeCol;
 
     @FXML
-    private TableColumn<Province, Number> barleyCol;
+    private TableColumn<Province, String> barleyCol;
 
     @FXML
     private TableColumn<Province, Number> oatsCol;
@@ -57,10 +59,12 @@ public class WindowController
             this.areaColumn.setCellValueFactory(param -> param.getValue().areaProperty());
             this.wheatCol.setCellValueFactory(value -> value.getValue().wheatProperty().get().quantityProperty());
             this.ryeCol.setCellValueFactory(value -> value.getValue().ryeProperty().get().quantityProperty());
-            this.barleyCol.setCellValueFactory(value -> value.getValue().barleyProperty().get().quantityProperty());
+            this.barleyCol.setCellValueFactory(value -> value.getValue().barleyProperty().get().quantityProperty().asString());
             this.oatsCol.setCellValueFactory(value -> value.getValue().oatProperty().get().quantityProperty());
             this.potatoesCol.setCellValueFactory(value -> value.getValue().potatoesProperty().get().quantityProperty());
             this.sugarBeetsCol.setCellValueFactory(value -> value.getValue().sugarBeetsProperty().get().quantityProperty());
+
+            this.barleyCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
         }
         catch (IOException e)
@@ -95,5 +99,20 @@ public class WindowController
         stage.show();
     }
 
+
+    public void onCommit(TableColumn.CellEditEvent<Province, String> provinceNumberCellEditEvent)
+    {
+
+        switch (provinceNumberCellEditEvent.getTablePosition().getColumn())
+        {
+            case 4:
+            {
+                this.plantsTable.getItems().get(provinceNumberCellEditEvent.getTablePosition().getRow()).getBarley().setQuantity(Long.parseLong(provinceNumberCellEditEvent.getNewValue()));
+                break;
+            }
+        }
+        System.out.println(provinceNumberCellEditEvent.getTablePosition().getRow());
+
+    }
 
 }

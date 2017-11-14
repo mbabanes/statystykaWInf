@@ -17,9 +17,9 @@
                   <TableColumn fx:id="areaColumn" minWidth="-1.0" prefWidth="-1.0" text="Powierzchnia (Ha)" />
                 <TableColumn fx:id="wheatCol" minWidth="-1.0" prefWidth="-1.0" text="Pszenica" />
                   <TableColumn fx:id="ryeCol" minWidth="-1.0" prefWidth="-1.0" text="Żyto" />
-                  <TableColumn fx:id="barleyCol" minWidth="-1.0" prefWidth="-1.0" text="Jęczmień" />
-                  <TableColumn fx:id="oatsCol" minWidth="-1.0" prefWidth="-1.0" text="Owies" />
-                  <TableColumn fx:id="potatoesCol" minWidth="-1.0" prefWidth="-1.0" text="Ziemniaki" />
+                  <TableColumn fx:id="barleyCol" minWidth="-1.0" onEditCommit="#onCommit" prefWidth="-1.0" text="Jęczmień" />
+                  <TableColumn fx:id="oatsCol" minWidth="-1.0" onEditCommit="#onCommit" prefWidth="-1.0" text="Owies" />
+                  <TableColumn fx:id="potatoesCol" minWidth="-1.0" onEditCommit="#onCommit" prefWidth="-1.0" text="Ziemniaki" />
                   <TableColumn fx:id="sugarBeetsCol" minWidth="-1.0" prefWidth="-1.0" text="Buraki Cukrowe" />
               </columns>
                <columnResizePolicy>
