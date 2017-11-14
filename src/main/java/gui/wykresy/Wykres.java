@@ -57,6 +57,22 @@ public class Wykres {
         seria.getData().add(new XYChart.Data<>(kategoria,wartosc));
     }
 
+    public void dodajWartoscDoWykresuPonownie()
+    {
+        dodajWartoscDoWykresu(0,province.getBarley().getName(),province.getBarley().getQuantity());
+        dodajWartoscDoWykresu(0,province.getSugarBeets().getName(),province.getSugarBeets().getQuantity());
+        dodajWartoscDoWykresu(0,province.getWheat().getName(),province.getWheat().getQuantity());
+        dodajWartoscDoWykresu(0,province.getOat().getName(),province.getOat().getQuantity());
+        dodajWartoscDoWykresu(0,province.getPotatoes().getName(),province.getPotatoes().getQuantity());
+        dodajWartoscDoWykresu(0,province.getRye().getName(),province.getRye().getQuantity());
+    }
+
+    public void czyscWykres()
+    {
+        chart.getData().clear();
+        seria.getData().clear();
+    }
+
     public void ustawWykres()
     {
         chart.getData().add(seria);
@@ -166,11 +182,19 @@ public class Wykres {
 
         String sc1 = "";
 
-        sc1 = pk.getImagePath();
-        top1 = new Image(sc1);
+        if(pk != null) {
+            sc1 = pk.getImagePath();
+            top1 = new Image(sc1);
+        }
+        else
+            top1 = new Image("/img/transparent.png");
 
-        sc1 = pk2.getImagePath();
-        top2 = new Image(sc1);
+        if(pk2 != null) {
+            sc1 = pk2.getImagePath();
+            top2 = new Image(sc1);
+        }
+        else
+            top2 = new Image("/img/transparent.png");
     }
 
     public Image getTop1() {

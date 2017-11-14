@@ -33,6 +33,7 @@ public class WykresController {
     @FXML
     private HBox hbox;
     private Image mapaCala;
+    private Image mapaOryginal;
     @FXML
     private ImageView imageView;
     private List<Wykres> wykresy;
@@ -44,12 +45,71 @@ public class WykresController {
 
     public WykresController()
     {
+//        mapaCala = new Image("/img/polskaKolorowa.png");
+//        mapaOryginal = new Image("/img/polskaKolorowa.png");
+    }
+
+    public void aktualizujWykres(int index)
+    {
         mapaCala = new Image("/img/polskaKolorowa.png");
+
+        //czysci
+        wykresy.get(index).czyscWykres();
+
+        //dodaje zmienne do wykresu
+        wykresy.get(index).dodajWartoscDoWykresuPonownie();
+
+        //generuje wykresy
+        wykresy.get(index).ustawWykres();
+        wykresy.get(index).ustawStyl("style.css");
+        wykresy.get(index).getBarChart().setPrefHeight(600);
+        wykresy.get(index).getBarChart().setPrefWidth(800);
+
+        //ustawia dwa najwieksze plony dla wykresu
+        wykresy.get(index).ustawNajwiekszeWartosci();
+
+        //dodanie plonów na mapie głównej
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(0).getTop1(),70,360);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(0).getTop2(),120,360);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(1).getTop1(),230,150);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(1).getTop2(),280,150);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(2).getTop1(),500,350);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(2).getTop2(),550,350);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(3).getTop1(),20,240);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(3).getTop2(),70,240);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(4).getTop1(),280,310);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(4).getTop2(),330,310);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(5).getTop1(),340,490);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(5).getTop2(),390,490);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(6).getTop1(),380,220); //warsz
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(6).getTop2(),430,220);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(7).getTop1(),170,400);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(7).getTop2(),220,400);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(8).getTop1(),470,470);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(8).getTop2(),520,470);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(9).getTop1(),500,130);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(9).getTop2(),550,130);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(10).getTop1(),200,50);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(10).getTop2(),250,50);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(11).getTop1(),270,420);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(11).getTop2(),320,420);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(12).getTop1(),380,400);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(12).getTop2(),430,400);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(13).getTop1(),380,80);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(13).getTop2(),430,80);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(14).getTop1(),140,240);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(14).getTop2(),190,240);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(15).getTop1(),40,100);
+        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(15).getTop2(),90,100);
+
+
+        imageView.setImage(mapaCala);
     }
 
     public void dajWykres()
     {
         wykresy = new ArrayList<>();
+        mapaCala = new Image("/img/polskaKolorowa.png");
 
         //inicjuje liste wykresow
         for (Province p: wojewodztwa) {

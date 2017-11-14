@@ -4,6 +4,7 @@ import entity.plants.Plant;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //        pszenica;żyto;jęczmień;owies;ziemniaki;burakiCukrowe;
@@ -25,6 +26,16 @@ public abstract class Province
     private FloatProperty area = new SimpleFloatProperty();
 
 
+    public void createListOfPlants()
+    {
+        listOfPlant = new ArrayList<>();
+        listOfPlant.add(wheat.get());
+        listOfPlant.add(rye.get());
+        listOfPlant.add(barley.get());
+        listOfPlant.add(oat.get());
+        listOfPlant.add(potatoes.get());
+        listOfPlant.add(sugarBeets.get());
+    }
 
 
     private StringProperty name = new SimpleStringProperty();

@@ -1,15 +1,21 @@
 package gui.controllers;
 
+import entity.plants.Plant;
 import entity.provinces.Province;
 import gui.model.DataSetModel;
+import gui.wykresy.Wykres;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 
 import java.io.IOException;
 
@@ -42,6 +48,10 @@ public class WindowController
     @FXML
     private TableColumn<Province, Number> sugarBeetsCol;
 
+    private WykresController wykresController;
+
+    private Stage stageWykres;
+
     private DataSetModel dataSetModel;
 
     @FXML
@@ -61,6 +71,15 @@ public class WindowController
             this.oatsCol.setCellValueFactory(value -> value.getValue().oatProperty().get().quantityProperty());
             this.potatoesCol.setCellValueFactory(value -> value.getValue().potatoesProperty().get().quantityProperty());
             this.sugarBeetsCol.setCellValueFactory(value -> value.getValue().sugarBeetsProperty().get().quantityProperty());
+            provinceCol.setEditable(true);
+
+
+//            areaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+//            wheatCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//            ryeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
+            ustawienieParametrowEdycji();
+            initStageWykres();
 
         }
         catch (IOException e)
@@ -72,10 +91,13 @@ public class WindowController
     @FXML
     public void wykresOknoAction()
     {
-        //barley - jeczmien
+        stageWykres.show();
+    }
 
-        Stage stage = new Stage();
-        stage.setTitle("Wykresik");
+    private void initStageWykres()
+    {
+        stageWykres = new Stage();
+        stageWykres.setTitle("Wykresik");
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/fxml/wykres.fxml"));
@@ -85,15 +107,39 @@ public class WindowController
         } catch (IOException e) {
             e.printStackTrace();
         }
-        WykresController wykres = loader.getController();
+        wykresController = loader.getController();
 
         ObservableList<Province> woj = plantsTable.getItems();
-        wykres.setWojewodztwa(woj);
-        wykres.setStage(stage);
-        wykres.dajWykres();
-        stage.setScene(new Scene(pane));
-        stage.show();
+        wykresController.setWojewodztwa(woj);
+        wykresController.setStage(stageWykres);
+        wykresController.dajWykres();
+        stageWykres.setScene(new Scene(pane));
     }
 
+    @FXML
+    public void cellEditCommit(TableColumn.CellEditEvent<Province,Number> cell)
+    {
+        if( cell.getNewValue()==null)
+            return;
 
+
+        if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())>1) {
+            cell.getTableView().getItems().get(cell.getTablePosition().getRow()).getListOfPlant().get(cell.getTableView().getColumns().indexOf(cell.getTableColumn()) - 2).setQuantity((long) cell.getNewValue());
+            wykresController.aktualizujWykres(cell.getTablePosition().getRow());
+        }
+        if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())==1)
+            cell.getTableView().getItems().get(cell.getTablePosition().getRow()).areaProperty().setValue(cell.getNewValue());
+    }
+
+    private void ustawienieParametrowEdycji()
+    {
+        provinceCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        areaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        wheatCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        ryeCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        barleyCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        oatsCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        potatoesCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        sugarBeetsCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+    }
 }
