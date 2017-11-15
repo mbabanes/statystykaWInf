@@ -47,4 +47,15 @@ public class DataParserTest
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void whenParsDataThenProvinceHasListOfPlants()
+    {
+        DataParser dataParser = new DataParser(loadedData);
+        ArrayList<Province> list = dataParser.parse();
+        int expected = 6;
+        list.forEach(province -> {
+            Assert.assertEquals(expected, province.getListOfPlant().size());
+        });
+    }
+
 }
