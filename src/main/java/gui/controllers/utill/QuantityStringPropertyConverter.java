@@ -6,14 +6,11 @@ import javafx.beans.property.StringProperty;
 
 import java.text.NumberFormat;
 
-public class QuantityInFormat
+public class QuantityStringPropertyConverter
 {
-    Plant plant;
+    private Plant plant;
 
-    public QuantityInFormat(Plant plant)
-    {
-        this.plant = plant;
-    }
+    public QuantityStringPropertyConverter(){};
 
 
     private StringProperty format()
@@ -25,8 +22,11 @@ public class QuantityInFormat
         return valueInFormat;
     }
 
-    public StringProperty parse()
+
+    public StringProperty convert(Plant value)
     {
+        this.plant = value;
+
         return format();
     }
 }
