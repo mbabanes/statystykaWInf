@@ -58,5 +58,8 @@ public class Kolor {
         }
         return writableImage;
     }
+
+
+
 }
 
