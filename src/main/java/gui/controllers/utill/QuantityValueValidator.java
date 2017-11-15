@@ -3,7 +3,7 @@ package gui.controllers.utill;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-public class ValidateQuantityValue
+public class QuantityValueValidator
 {
     private final static String SPACE = " ";
     private final static String NON_BREAKING_SPACE = "\u00A0";
@@ -11,7 +11,7 @@ public class ValidateQuantityValue
     private String value;
     private Number valueAsNumber;
 
-    public ValidateQuantityValue(String value)
+    public QuantityValueValidator(String value)
     {
         this.value = value;
         changeSpaceToNonBreakingSpace();
@@ -19,7 +19,7 @@ public class ValidateQuantityValue
 
 
 
-    public Number parse() throws ParseException
+    public Number validate() throws ParseException
     {
         return parseValue();
     }
