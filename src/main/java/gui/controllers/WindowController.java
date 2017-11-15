@@ -3,7 +3,7 @@ package gui.controllers;
 import entity.provinces.Province;
 import gui.controllers.utill.Dialogs;
 import gui.controllers.utill.QuantityStringPropertyConverter;
-import gui.controllers.utill.ValidateQuantityValue;
+import gui.controllers.utill.QuantityValueValidator;
 import gui.model.DataSetModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -86,15 +86,16 @@ public class WindowController
     public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> cell)
     {
         String newValue = cell.getNewValue();
-        ValidateQuantityValue validator = new ValidateQuantityValue(newValue);
+        QuantityValueValidator validator = new QuantityValueValidator(newValue);
         try
         {
-            Number value = validator.parse();
-            final int columnOffset = 2;
-            int idPlant = cell.getTablePosition().getColumn() - columnOffset;
+            Number value = validator.validate();
+            int idPlant = appointIdPlant(cell.getTablePosition().getColumn());
             Province province = cell.getRowValue();
 
-            this.dataSetModel.editDataList(province, value.longValue(), idPlant);
+            this.dataSetModel.updateDataList(province, value.longValue(), idPlant);
+
+            this.wykresController.aktualizujWykres(province.getId());
         }
         catch (ParseException e)
         {
@@ -103,6 +104,8 @@ public class WindowController
 
         this.plantsTable.refresh();
     }
+
+
 
     private void prepareTableView()
     {
@@ -174,5 +177,11 @@ public class WindowController
         oatsCol.setCellFactory(TextFieldTableCell.forTableColumn());
         potatoesCol.setCellFactory(TextFieldTableCell.forTableColumn());
         sugarBeetsCol.setCellFactory(TextFieldTableCell.forTableColumn());
+    }
+
+    private int appointIdPlant(int currentColumn)
+    {
+        final int columnOffset = 2;
+        return currentColumn - columnOffset;
     }
 }
