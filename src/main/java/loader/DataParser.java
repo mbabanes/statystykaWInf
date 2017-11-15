@@ -4,7 +4,6 @@ import entity.plants.Plant;
 import entity.provinces.Province;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataParser
 {
@@ -44,7 +43,7 @@ public class DataParser
 
         for (int i = 1; i < this.dataFromCSV.size(); i++)
         {
-            data.add( createDataRow(i) );
+            data.add(createDataRow(i));
         }
 
         return data;
@@ -53,9 +52,8 @@ public class DataParser
     private Province createDataRow(int i)
     {
         String[] dataLine = takeLine(i);
-        return  createProvince(dataLine, i);
+        return createProvince(dataLine, i);
     }
-
 
 
     private Province createProvince(String[] dataLine, int i)
@@ -72,24 +70,11 @@ public class DataParser
         province.setOat(createPlant(plantNames[OAT_COL], dataLine[OAT_COL]));
         province.setPotatoes(createPlant(plantNames[POTATOES_COL], dataLine[POTATOES_COL]));
         province.setSugarBeets(createPlant(plantNames[SUGAR_BEETS_COL], dataLine[SUGAR_BEETS_COL]));
-        province.createListOfPlants();
 
+        createListOfPlants(province);
         return province;
     }
 
-    private ArrayList<Plant> createListOfPlants(String[] dataLine)
-    {
-        ArrayList<Plant> listOfPlants = new ArrayList<>();
-
-        String[] plantNames = takeLine(FIRST_LINE);
-        for (int j = 1; j < dataLine.length; j++)
-        {
-            Plant plant = createPlant(plantNames[j], dataLine[j]);
-            listOfPlants.add(plant);
-        }
-
-        return listOfPlants;
-    }
 
     private String[] takeLine(int i)
     {
@@ -102,5 +87,18 @@ public class DataParser
         plant.setName(plantName);
         plant.setQuantity(Long.parseLong(value));
         return plant;
+    }
+
+    private void createListOfPlants(Province province)
+    {
+        ArrayList<Plant> listOfPlants = new ArrayList<>();
+        listOfPlants.add(province.getWheat());
+        listOfPlants.add(province.getRye());
+        listOfPlants.add(province.getBarley());
+        listOfPlants.add(province.getOat());
+        listOfPlants.add(province.getPotatoes());
+        listOfPlants.add(province.getSugarBeets());
+
+        province.setListOfPlant(listOfPlants);
     }
 }
