@@ -4,6 +4,7 @@ import entity.plants.Plant;
 import entity.provinces.Province;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataParser
 {
@@ -52,16 +53,17 @@ public class DataParser
     private Province createDataRow(int i)
     {
         String[] dataLine = takeLine(i);
-        return  createProvince(dataLine);
+        return  createProvince(dataLine, i);
     }
 
 
 
-    private Province createProvince(String[] dataLine)
+    private Province createProvince(String[] dataLine, int i)
     {
         Province province = Province.createProvince(dataLine[PROVINCE_NAME]);
         province.setName(dataLine[PROVINCE_NAME]);
         province.setArea(Float.parseFloat(dataLine[PROVINCE_AREA]));
+        province.setId(i - 1);
         String[] plantNames = takeLine(FIRST_LINE);
 
         province.setWheat(createPlant(plantNames[WHEAT_COL], dataLine[WHEAT_COL]));
@@ -70,6 +72,8 @@ public class DataParser
         province.setOat(createPlant(plantNames[OAT_COL], dataLine[OAT_COL]));
         province.setPotatoes(createPlant(plantNames[POTATOES_COL], dataLine[POTATOES_COL]));
         province.setSugarBeets(createPlant(plantNames[SUGAR_BEETS_COL], dataLine[SUGAR_BEETS_COL]));
+        province.createListOfPlants();
+
         return province;
     }
 
@@ -83,6 +87,7 @@ public class DataParser
             Plant plant = createPlant(plantNames[j], dataLine[j]);
             listOfPlants.add(plant);
         }
+
         return listOfPlants;
     }
 

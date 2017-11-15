@@ -1,34 +1,26 @@
 package gui.controllers;
 
+import entity.plants.Plant;
 import entity.provinces.Province;
-import gui.controllers.utill.QuantityInFormat;
 import gui.model.DataSetModel;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import gui.wykresy.Wykres;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.ParseException;
 
 public class WindowController
 {
-    private static final int WHEAT_COL = 2;
-    private static final int RYE_COL = 3;
-    private static final int BARLEY_COL = 4;
-    private static final int OAT_COL = 5;
-    private static final int POTATOES_COL = 6;
-    private static final int SUGAR_BEETS_COL = 7;
-
-
     @FXML
     private TableView<Province> plantsTable;
 
@@ -36,25 +28,29 @@ public class WindowController
     private TableColumn<Province, String> provinceCol;
 
     @FXML
-    private TableColumn<Province, String> areaColumn;
+    private TableColumn<Province, Number> areaColumn;
 
     @FXML
-    private TableColumn<Province, String> wheatCol;
+    private TableColumn<Province, Number> wheatCol;
 
     @FXML
-    private TableColumn<Province, String> ryeCol;
+    private TableColumn<Province, Number> ryeCol;
 
     @FXML
-    private TableColumn<Province, String> barleyCol;
+    private TableColumn<Province, Number> barleyCol;
 
     @FXML
-    private TableColumn<Province, String> oatsCol;
+    private TableColumn<Province, Number> oatsCol;
 
     @FXML
-    private TableColumn<Province, String> potatoesCol;
+    private TableColumn<Province, Number> potatoesCol;
 
     @FXML
-    private TableColumn<Province, String> sugarBeetsCol;
+    private TableColumn<Province, Number> sugarBeetsCol;
+
+    private WykresController wykresController;
+
+    private Stage stageWykres;
 
     private DataSetModel dataSetModel;
 
@@ -67,38 +63,23 @@ public class WindowController
         {
             dataSetModel.loadData();
             plantsTable.setItems(dataSetModel.getDataList());
-            this.provinceCol.setCellValueFactory(value -> value.getValue().nameProperty());
-            this.areaColumn.setCellValueFactory(value -> {
-                StringProperty areaValue = new SimpleStringProperty();
-                areaValue.setValue(NumberFormat.getNumberInstance().format(value.getValue().getArea()));
-                return areaValue;
-            });
-            this.wheatCol.setCellValueFactory(value -> {
-                QuantityInFormat quantityInFormat = new QuantityInFormat(value.getValue().getWheat());
-                return quantityInFormat.parse();
-            });
-            this.ryeCol.setCellValueFactory(value -> {
-                QuantityInFormat quantityInFormat = new QuantityInFormat(value.getValue().getRye());
-                return quantityInFormat.parse();
-            });
-            this.barleyCol.setCellValueFactory(value -> {
-                QuantityInFormat quantityInFormat = new QuantityInFormat(value.getValue().getBarley());
-                return quantityInFormat.parse();
-            });
-            this.oatsCol.setCellValueFactory(value -> {
-                QuantityInFormat quantityInFormat = new QuantityInFormat(value.getValue().getOat());
-                return quantityInFormat.parse();
-            });
-            this.potatoesCol.setCellValueFactory(value -> {
-                QuantityInFormat quantityInFormat = new QuantityInFormat(value.getValue().getPotatoes());
-                return quantityInFormat.parse();
-            });
-            this.sugarBeetsCol.setCellValueFactory(value -> {
-                QuantityInFormat quantityInFormat = new QuantityInFormat(value.getValue().getSugarBeets());
-                return quantityInFormat.parse();
-            });
+            this.provinceCol.setCellValueFactory(param -> param.getValue().nameProperty());
+            this.areaColumn.setCellValueFactory(param -> param.getValue().areaProperty());
+            this.wheatCol.setCellValueFactory(value -> value.getValue().wheatProperty().get().quantityProperty());
+            this.ryeCol.setCellValueFactory(value -> value.getValue().ryeProperty().get().quantityProperty());
+            this.barleyCol.setCellValueFactory(value -> value.getValue().barleyProperty().get().quantityProperty());
+            this.oatsCol.setCellValueFactory(value -> value.getValue().oatProperty().get().quantityProperty());
+            this.potatoesCol.setCellValueFactory(value -> value.getValue().potatoesProperty().get().quantityProperty());
+            this.sugarBeetsCol.setCellValueFactory(value -> value.getValue().sugarBeetsProperty().get().quantityProperty());
+            provinceCol.setEditable(true);
 
-            this.barleyCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
+//            areaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+//            wheatCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//            ryeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
+            ustawienieParametrowEdycji();
+            initStageWykres();
 
         }
         catch (IOException e)
@@ -110,105 +91,56 @@ public class WindowController
     @FXML
     public void wykresOknoAction()
     {
-        //barley - jeczmien
+        stageWykres.show();
+    }
 
-        Stage stage = new Stage();
-        stage.setTitle("Wykresik");
+    private void initStageWykres()
+    {
+        stageWykres = new Stage();
+        stageWykres.setTitle("Wykresik");
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/fxml/wykres.fxml"));
         AnchorPane pane = null;
-        try
-        {
+        try {
             pane = loader.load();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        WykresController wykres = loader.getController();
+        wykresController = loader.getController();
 
         ObservableList<Province> woj = plantsTable.getItems();
-        wykres.setWojewodztwa(woj);
-        wykres.setStage(stage);
-        wykres.dajWykres();
-        stage.setScene(new Scene(pane));
-        stage.show();
+        wykresController.setWojewodztwa(woj);
+        wykresController.setStage(stageWykres);
+        wykresController.dajWykres();
+        stageWykres.setScene(new Scene(pane));
     }
 
-
-    public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> provinceNumberCellEditEvent)
+    @FXML
+    public void cellEditCommit(TableColumn.CellEditEvent<Province,Number> cell)
     {
-        try
-        {
-            final String SPACE = " ";
-            final String NON_BREAKING_SPACE = "\u00A0";
+        if( cell.getNewValue()==null)
+            return;
 
-            String newValueAsString = provinceNumberCellEditEvent.getNewValue().replaceAll(SPACE, NON_BREAKING_SPACE);
-            Number newValue = parsePuttedText(newValueAsString);
-
-            int currentColumn = provinceNumberCellEditEvent.getTablePosition().getColumn();
-            int currentRow = provinceNumberCellEditEvent.getTablePosition().getRow();
-
-            putNewValue(newValue, currentColumn, currentRow);
-            this.plantsTable.refresh();
+        System.out.println(cell.getRowValue().getId());
+        System.out.println("col:" + cell.getTablePosition().getColumn());
+        if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())>1) {
+            cell.getTableView().getItems().get(cell.getTablePosition().getRow()).getListOfPlant().get(cell.getTableView().getColumns().indexOf(cell.getTableColumn()) - 2).setQuantity((long) cell.getNewValue());
+            wykresController.aktualizujWykres(cell.getTablePosition().getRow());
         }
-        catch (ParseException e)
-        {
-            System.out.println("Blad Danych " + e.getMessage());
-        }
+        if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())==1)
+            cell.getTableView().getItems().get(cell.getTablePosition().getRow()).areaProperty().setValue(cell.getNewValue());
     }
 
-    private Number parsePuttedText(String newValueAsString) throws ParseException
+    private void ustawienieParametrowEdycji()
     {
-        NumberFormat formatter = NumberFormat.getIntegerInstance();
-        Number newValue = formatter.parse(newValueAsString);
-
-        if (newValue.longValue() < 0)
-            throw new ParseException("Liczba musi być wieksza od 0", 1);
-        return newValue;
+        provinceCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        areaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        wheatCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        ryeCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        barleyCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        oatsCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        potatoesCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        sugarBeetsCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
     }
-
-    private void putNewValue(Number newValue, int currentColumn, int currentRow)
-    {
-        switch (currentColumn)
-        {
-            case WHEAT_COL:
-            {
-                this.plantsTable.getItems().get(currentRow).getWheat().setQuantity(newValue.longValue());
-                break;
-            }
-
-            case RYE_COL:
-            {
-                this.plantsTable.getItems().get(currentRow).getRye().setQuantity(newValue.longValue());
-                break;
-            }
-
-            case BARLEY_COL:
-            {
-                this.plantsTable.getItems().get(currentRow).getBarley().setQuantity(newValue.longValue());
-                break;
-            }
-
-            case OAT_COL:
-            {
-                this.plantsTable.getItems().get(currentRow).getOat().setQuantity(newValue.longValue());
-                break;
-            }
-
-            case POTATOES_COL:
-            {
-                this.plantsTable.getItems().get(currentRow).getPotatoes().setQuantity(newValue.longValue());
-                break;
-            }
-
-            case SUGAR_BEETS_COL:
-            {
-                this.plantsTable.getItems().get(currentRow).getSugarBeets().setQuantity(newValue.longValue());
-                break;
-            }
-        }
-    }
-
 }
