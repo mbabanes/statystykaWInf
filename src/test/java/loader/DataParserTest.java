@@ -38,7 +38,7 @@ public class DataParserTest
         ArrayList<Province> list = dataParser.parse();
 
         list.forEach((province -> {
-            System.out.println(province);
+            System.out.println(province.getName() + " " + province.getId());
         }));
 
         int actual = list.size();

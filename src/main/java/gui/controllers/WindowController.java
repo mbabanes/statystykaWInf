@@ -122,7 +122,8 @@ public class WindowController
         if( cell.getNewValue()==null)
             return;
 
-
+        System.out.println(cell.getRowValue().getId());
+        System.out.println("col:" + cell.getTablePosition().getColumn());
         if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())>1) {
             cell.getTableView().getItems().get(cell.getTablePosition().getRow()).getListOfPlant().get(cell.getTableView().getColumns().indexOf(cell.getTableColumn()) - 2).setQuantity((long) cell.getNewValue());
             wykresController.aktualizujWykres(cell.getTablePosition().getRow());

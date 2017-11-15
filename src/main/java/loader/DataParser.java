@@ -53,16 +53,17 @@ public class DataParser
     private Province createDataRow(int i)
     {
         String[] dataLine = takeLine(i);
-        return  createProvince(dataLine);
+        return  createProvince(dataLine, i);
     }
 
 
 
-    private Province createProvince(String[] dataLine)
+    private Province createProvince(String[] dataLine, int i)
     {
         Province province = Province.createProvince(dataLine[PROVINCE_NAME]);
         province.setName(dataLine[PROVINCE_NAME]);
         province.setArea(Float.parseFloat(dataLine[PROVINCE_AREA]));
+        province.setId(i - 1);
         String[] plantNames = takeLine(FIRST_LINE);
 
         province.setWheat(createPlant(plantNames[WHEAT_COL], dataLine[WHEAT_COL]));

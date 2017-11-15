@@ -22,6 +22,17 @@ public abstract class Province
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
     private Color kolorNaMapie;
 
+    protected int id;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     private FloatProperty area = new SimpleFloatProperty();
 
@@ -280,6 +291,7 @@ public abstract class Province
                 ", potatoes=" + potatoes +
                 ", sugarBeets=" + sugarBeets +
                 ", kolorNaMapie=" + kolorNaMapie +
+                ", id=" + id +
                 ", area=" + area +
                 ", name=" + name +
                 '}';
