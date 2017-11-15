@@ -8,7 +8,7 @@ import java.text.ParseException;
 
 import static org.junit.Assert.*;
 
-public class ValidateQuantityValueTest
+public class QuantityValueValidatorTest
 {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -17,9 +17,9 @@ public class ValidateQuantityValueTest
     public void whenPutSomeNumberAsStringThenReturnNumberValue() throws ParseException
     {
         String numberAsString = "123";
-        ValidateQuantityValue validateQuantityValue = new ValidateQuantityValue(numberAsString);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(numberAsString);
 
-        Number actual = validateQuantityValue.parse();
+        Number actual = quantityValueValidator.validate();
         Number expected = new Integer(123);
 
         assertEquals(expected.intValue(), actual.intValue());
@@ -29,9 +29,9 @@ public class ValidateQuantityValueTest
     public void whenPutSomeNumberWithSpaceThenReturnNumberValue() throws ParseException
     {
         String numberInFormat = "12 333";
-        ValidateQuantityValue validateQuantityValue = new ValidateQuantityValue(numberInFormat);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(numberInFormat);
 
-        Number actual = validateQuantityValue.parse();
+        Number actual = quantityValueValidator.validate();
         int expected = 12333;
 
         assertEquals(expected, actual.intValue());
@@ -41,17 +41,17 @@ public class ValidateQuantityValueTest
     public void whenPutSomeLettersThenThrowParseException() throws ParseException
     {
         String letters = "asdwqe";
-        ValidateQuantityValue validateQuantityValue = new ValidateQuantityValue(letters);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(letters);
         expectedException.expect(ParseException.class);
-        validateQuantityValue.parse();
+        quantityValueValidator.validate();
     }
 
     @Test
     public void whenPutNumberLessThanZeroThenThrowParseException() throws ParseException
     {
         String numberLessThanZero = "-12";
-        ValidateQuantityValue validateQuantityValue = new ValidateQuantityValue(numberLessThanZero);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(numberLessThanZero);
         expectedException.expect(ParseException.class);
-        validateQuantityValue.parse();
+        quantityValueValidator.validate();
     }
 }
