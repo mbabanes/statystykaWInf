@@ -11,7 +11,7 @@
    <children>
       <HBox VBox.vgrow="ALWAYS">
          <children>
-            <TableView fx:id="plantsTable" editable="true" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+            <TableView fx:id="plantsTable" editable="true" HBox.hgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="provinceCol" editable="false" minWidth="-1.0" prefWidth="-1.0" text="Województwo" />
                   <TableColumn fx:id="areaColumn" minWidth="-1.0" prefWidth="-1.0" text="Powierzchnia (Ha)" />
