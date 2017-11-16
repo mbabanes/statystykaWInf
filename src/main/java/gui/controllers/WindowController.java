@@ -54,6 +54,7 @@ public class WindowController
 
     private DataSetModel dataSetModel;
 
+
     @FXML
     public void initialize()
     {
@@ -73,10 +74,6 @@ public class WindowController
             this.sugarBeetsCol.setCellValueFactory(value -> value.getValue().sugarBeetsProperty().get().quantityProperty());
             provinceCol.setEditable(true);
 
-
-//            areaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-//            wheatCol.setCellFactory(TextFieldTableCell.forTableColumn());
-//            ryeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
             ustawienieParametrowEdycji();
             initStageWykres();
@@ -113,7 +110,9 @@ public class WindowController
         wykresController.setWojewodztwa(woj);
         wykresController.setStage(stageWykres);
         wykresController.dajWykres();
-        stageWykres.setScene(new Scene(pane));
+
+        if(pane!=null)
+            stageWykres.setScene(new Scene(pane));
     }
 
     @FXML
@@ -122,14 +121,15 @@ public class WindowController
         if( cell.getNewValue()==null)
             return;
 
-        System.out.println(cell.getRowValue().getId());
-        System.out.println("col:" + cell.getTablePosition().getColumn());
         if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())>1) {
             cell.getTableView().getItems().get(cell.getTablePosition().getRow()).getListOfPlant().get(cell.getTableView().getColumns().indexOf(cell.getTableColumn()) - 2).setQuantity((long) cell.getNewValue());
             wykresController.aktualizujWykres(cell.getTablePosition().getRow());
         }
-        if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())==1)
+        if(cell.getTableView().getColumns().indexOf(cell.getTableColumn())==1) {
             cell.getTableView().getItems().get(cell.getTablePosition().getRow()).areaProperty().setValue(cell.getNewValue());
+            wykresController.zmienKolorWojewodztwa(cell.getTablePosition().getRow());
+
+        }
     }
 
     private void ustawienieParametrowEdycji()
