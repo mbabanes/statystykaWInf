@@ -40,4 +40,9 @@ public class DataSetModel
     {
         this.dataList = dataList;
     }
+
+    public void updateDataList(Province province, long newValue, int idPlant)
+    {
+        province.getListOfPlant().get(idPlant).setQuantity(newValue);
+    }
 }
