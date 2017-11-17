@@ -4,17 +4,15 @@ import entity.provinces.Province;
 import gui.controllers.utill.Dialogs;
 import gui.controllers.utill.QuantityStringPropertyConverter;
 import gui.controllers.utill.QuantityValueValidator;
+import gui.loader.DataPresenterLoader;
 import gui.model.DataSetModel;
+import gui.model.StatisticsModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,6 +54,10 @@ public class WindowController
 
     private DataSetModel dataSetModel;
 
+    private StatisticsModel statisticsModel;
+
+    DataPresenterLoader dataPresenterLoader;
+
     @FXML
     public void initialize()
     {
@@ -95,7 +97,7 @@ public class WindowController
 
             this.dataSetModel.updateDataList(province, value.longValue(), idPlant);
 
-            this.wykresController.aktualizujWykres(province.getId());
+            refreshStatistics(province.getId());
         }
         catch (ParseException e)
         {
@@ -105,6 +107,11 @@ public class WindowController
         this.plantsTable.refresh();
     }
 
+    private void refreshStatistics(int idProvince)
+    {
+        this.wykresController.aktualizujWykres(idProvince);
+        this.dataPresenterLoader.getStatisticsController().refresh();
+    }
 
 
     private void prepareTableView()
@@ -146,24 +153,12 @@ public class WindowController
 
     private void initStageWykres()
     {
-        stageWykres = new Stage();
-        stageWykres.setTitle("Wykresik");
+        dataPresenterLoader = new DataPresenterLoader(dataSetModel.getDataList());
+        dataPresenterLoader.loadWykresWindow();
+        stageWykres = dataPresenterLoader.getStage();
+        wykresController = dataPresenterLoader.getWykresController();
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("/fxml/wykres.fxml"));
-        AnchorPane pane = null;
-        try {
-            pane = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        wykresController = loader.getController();
-
-        ObservableList<Province> woj = plantsTable.getItems();
-        wykresController.setWojewodztwa(woj);
-        wykresController.setStage(stageWykres);
-        wykresController.dajWykres();
-        stageWykres.setScene(new Scene(pane));
+        dataPresenterLoader.loadStatisticWindow();
     }
 
 
