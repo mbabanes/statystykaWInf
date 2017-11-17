@@ -57,9 +57,7 @@ public class WindowController
 
     private DataSetModel dataSetModel;
 
-    private StatisticsModel statisticsModel;
-
-    DataPresenterLoader dataPresenterLoader;
+    private DataPresenterLoader dataPresenterLoader;
 
     @FXML
     public void initialize()
@@ -112,7 +110,7 @@ public class WindowController
     private void refreshStatistics(int idProvince)
     {
         this.wykresController.aktualizujWykres(idProvince);
-        this.wykresController.zmienKolorWojewodztwa(idProvince);
+//        this.wykresController.zmienKolorWojewodztwa(idProvince);
         this.dataPresenterLoader.getStatisticsController().refresh();
 
     }
