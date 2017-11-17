@@ -74,7 +74,6 @@ public class DataParser
         province.setPotatoes(createPlant(plantNames[POTATOES_COL], dataLine[POTATOES_COL]));
         province.setSugarBeets(createPlant(plantNames[SUGAR_BEETS_COL], dataLine[SUGAR_BEETS_COL]));
         province.setFullarea(Float.parseFloat(dataLine[PROVINCE_AREA_FULL]));
-        province.createListOfPlants();
 
         createListOfPlants(province);
         return province;
