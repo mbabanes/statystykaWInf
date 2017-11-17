@@ -4,7 +4,9 @@ import entity.provinces.Province;
 import gui.controllers.utill.Dialogs;
 import gui.controllers.utill.QuantityStringPropertyConverter;
 import gui.controllers.utill.QuantityValueValidator;
+import gui.loader.DataPresenterLoader;
 import gui.model.DataSetModel;
+import gui.model.StatisticsModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -21,7 +23,8 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-public class WindowController {
+public class WindowController
+{
     @FXML
     private TableView<Province> plantsTable;
 
@@ -55,38 +58,50 @@ public class WindowController {
 
     private DataSetModel dataSetModel;
 
+    private StatisticsModel statisticsModel;
+
+    DataPresenterLoader dataPresenterLoader;
+
     @FXML
-    public void initialize() {
+    public void initialize()
+    {
         dataSetModel = new DataSetModel();
 
-        try {
+        try
+        {
             dataSetModel.loadData();
             prepareTableView();
             initStageWykres();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println("Error: " + e);
         }
     }
 
 
+
     @FXML
-    public void wykresOknoAction() {
+    public void wykresOknoAction()
+    {
         stageWykres.show();
     }
 
     @FXML
-    public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> cell) {
+    public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> cell)
+    {
         String newValue = cell.getNewValue();
         QuantityValueValidator validator = new QuantityValueValidator(newValue);
-        try {
+        try
+        {
             Number value = validator.validate();
             int idPlant = appointIdPlant(cell.getTablePosition().getColumn());
             Province province = cell.getRowValue();
 
             this.dataSetModel.updateDataList(province, value.longValue(), idPlant);
 
-            this.wykresController.aktualizujWykres(province.getId());
+            refreshStatistics(province.getId());
         } catch (ParseException e) {
             Dialogs.errorDialog("Błąd walidacji, należy podawać liczby całkowite dodatnie.");
         }
@@ -95,13 +110,16 @@ public class WindowController {
     }
 
 
-    private void prepareTableView() {
+
+    private void prepareTableView()
+    {
         plantsTable.setItems(dataSetModel.getDataList());
         putValuesToEachColumn();
         ustawienieParametrowEdycji();
     }
 
-    private void putValuesToEachColumn() {
+    private void putValuesToEachColumn()
+    {
         QuantityStringPropertyConverter converter = new QuantityStringPropertyConverter();
 
         this.provinceCol.setCellValueFactory(value -> value.getValue().nameProperty());
@@ -130,29 +148,20 @@ public class WindowController {
         });
     }
 
-    private void initStageWykres() {
-        stageWykres = new Stage();
-        stageWykres.setTitle("Wykresik");
+    private void initStageWykres()
+    {
+        dataPresenterLoader = new DataPresenterLoader(dataSetModel.getDataList());
+        dataPresenterLoader.loadWykresWindow();
+        stageWykres = dataPresenterLoader.getStage();
+        wykresController = dataPresenterLoader.getWykresController();
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("/fxml/wykres.fxml"));
-        AnchorPane pane = null;
-        try {
-            pane = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        wykresController = loader.getController();
-
-        ObservableList<Province> woj = plantsTable.getItems();
-        wykresController.setWojewodztwa(woj);
-        wykresController.setStage(stageWykres);
-        wykresController.dajWykres();
-        stageWykres.setScene(new Scene(pane));
+        dataPresenterLoader.loadStatisticWindow();
     }
 
 
-    private void ustawienieParametrowEdycji() {
+
+    private void ustawienieParametrowEdycji()
+    {
         provinceCol.setEditable(true);
         areaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         wheatCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -163,7 +172,8 @@ public class WindowController {
         sugarBeetsCol.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
-    private int appointIdPlant(int currentColumn) {
+    private int appointIdPlant(int currentColumn)
+    {
         final int columnOffset = 2;
         return currentColumn - columnOffset;
     }
