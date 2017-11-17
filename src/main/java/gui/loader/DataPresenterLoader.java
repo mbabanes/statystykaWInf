@@ -5,6 +5,7 @@ import gui.controllers.StatisticsController;
 import gui.controllers.WykresController;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
@@ -35,14 +36,17 @@ public class DataPresenterLoader
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/fxml/wykres.fxml"));
-        AnchorPane pane = null;
+        Pane pane = null;
 
         try {
             pane = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tabPane = (TabPane) pane.getChildren().get(0);
+//        Node node = (Node) pane;
+//        tabPane = node.f
+
+        tabPane = (TabPane) pane.lookup("#tabPane");
         wykresController = loader.getController();
 
         ObservableList<Province> woj = provinces;

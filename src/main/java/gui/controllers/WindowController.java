@@ -9,14 +9,13 @@ import gui.model.DataSetModel;
 import gui.model.StatisticsModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -109,6 +108,14 @@ public class WindowController
         this.plantsTable.refresh();
     }
 
+
+    private void refreshStatistics(int idProvince)
+    {
+        this.wykresController.aktualizujWykres(idProvince);
+        this.wykresController.zmienKolorWojewodztwa(idProvince);
+        this.dataPresenterLoader.getStatisticsController().refresh();
+
+    }
 
 
     private void prepareTableView()

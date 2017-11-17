@@ -76,22 +76,10 @@ public class DataParser
         province.setFullarea(Float.parseFloat(dataLine[PROVINCE_AREA_FULL]));
         province.createListOfPlants();
 
+        createListOfPlants(province);
         return province;
     }
 
-    private ArrayList<Plant> createListOfPlants(String[] dataLine)
-    {
-        ArrayList<Plant> listOfPlants = new ArrayList<>();
-
-        String[] plantNames = takeLine(FIRST_LINE);
-        for (int j = 1; j < dataLine.length; j++)
-        {
-            Plant plant = createPlant(plantNames[j], dataLine[j]);
-            listOfPlants.add(plant);
-        }
-
-        return listOfPlants;
-    }
 
     private String[] takeLine(int i)
     {
@@ -104,5 +92,18 @@ public class DataParser
         plant.setName(plantName);
         plant.setQuantity(Long.parseLong(value));
         return plant;
+    }
+
+    private void createListOfPlants(Province province)
+    {
+        ArrayList<Plant> listOfPlants = new ArrayList<>();
+        listOfPlants.add(province.getWheat());
+        listOfPlants.add(province.getRye());
+        listOfPlants.add(province.getBarley());
+        listOfPlants.add(province.getOat());
+        listOfPlants.add(province.getPotatoes());
+        listOfPlants.add(province.getSugarBeets());
+
+        province.setListOfPlant(listOfPlants);
     }
 }

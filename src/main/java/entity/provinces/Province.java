@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class Province
 {
 //    private String name;
+private int id;
     private List<Plant> listOfPlant;
     private ObjectProperty<Plant> wheat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> rye = new SimpleObjectProperty<>();
@@ -22,32 +23,10 @@ public abstract class Province
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
     private Color kolorNaMapie;
 
-    protected int id;
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 
     private FloatProperty area = new SimpleFloatProperty();
     private FloatProperty fullarea = new SimpleFloatProperty();
 
-
-    public void createListOfPlants()
-    {
-        listOfPlant = new ArrayList<>();
-        listOfPlant.add(wheat.get());
-        listOfPlant.add(rye.get());
-        listOfPlant.add(barley.get());
-        listOfPlant.add(oat.get());
-        listOfPlant.add(potatoes.get());
-        listOfPlant.add(sugarBeets.get());
-    }
 
 
     private StringProperty name = new SimpleStringProperty();
@@ -140,6 +119,15 @@ public abstract class Province
         return null;
     }
 
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
 
     public String getName()
