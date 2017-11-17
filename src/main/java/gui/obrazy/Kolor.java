@@ -1,5 +1,6 @@
 package gui.obrazy;
 
+import entity.provinces.Province;
 import gui.wykresy.Wykres;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.*;
@@ -59,6 +60,54 @@ public class Kolor {
         return writableImage;
     }
 
+
+    public static void ustawKoloryPierwotne(Image image, List<Province> woj)
+    {
+        PixelReader pixelReader = image.getPixelReader();
+
+
+        int i = 200;
+        for (Province p: woj ) {
+            p.setKolorNaMapie(Color.rgb(i,i,i));
+            i++;
+        }
+    }
+
+    public static Image zmienKolor(Image image, Color zKoloru, Color naKolor)
+    {
+        PixelReader pixelReader = image.getPixelReader();
+        int width = (int)image.getWidth();
+        int height = (int)image.getHeight();
+
+        WritableImage writableImage = new WritableImage(pixelReader,width,height);
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+
+        for(int y=0;y<height;y++)
+        {
+            for(int x=0;x<width;x++)
+            {
+                if(pixelReader.getColor(x,y).equals(zKoloru))
+                {
+                    pixelWriter.setColor(x,y,naKolor);
+                }
+            }
+        }
+
+        return writableImage;
+    }
+
+    public static boolean sprawdzCzyIstniejeKolor(Color kolor, List<Province> woj)
+    {
+        for (Province p: woj) {
+            if(p.getKolorNaMapie().equals(kolor))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
 }

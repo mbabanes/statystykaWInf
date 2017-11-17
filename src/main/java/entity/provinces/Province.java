@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class Province
 {
-    private int id;
+//    private String name;
     private List<Plant> listOfPlant;
     private ObjectProperty<Plant> wheat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> rye = new SimpleObjectProperty<>();
@@ -20,10 +20,37 @@ public abstract class Province
     private ObjectProperty<Plant> oat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> potatoes = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
-    private FloatProperty area = new SimpleFloatProperty();
-    private StringProperty name = new SimpleStringProperty();
     private Color kolorNaMapie;
 
+    protected int id;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    private FloatProperty area = new SimpleFloatProperty();
+    private FloatProperty fullarea = new SimpleFloatProperty();
+
+
+    public void createListOfPlants()
+    {
+        listOfPlant = new ArrayList<>();
+        listOfPlant.add(wheat.get());
+        listOfPlant.add(rye.get());
+        listOfPlant.add(barley.get());
+        listOfPlant.add(oat.get());
+        listOfPlant.add(potatoes.get());
+        listOfPlant.add(sugarBeets.get());
+    }
+
+
+    private StringProperty name = new SimpleStringProperty();
 
 
     public static Province createProvince(String name)
@@ -113,15 +140,7 @@ public abstract class Province
         return null;
     }
 
-    public int getId()
-    {
-        return id;
-    }
 
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 
     public String getName()
     {
@@ -261,9 +280,20 @@ public abstract class Province
         this.area.set(area);
     }
 
+    public float getFullarea() {
+        return fullarea.get();
+    }
+
+    public FloatProperty fullareaProperty() {
+        return fullarea;
+    }
+
+    public void setFullarea(float fullarea) {
+        this.fullarea.set(fullarea);
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Province{" +
                 "listOfPlant=" + listOfPlant +
                 ", wheat=" + wheat +
@@ -275,6 +305,7 @@ public abstract class Province
                 ", kolorNaMapie=" + kolorNaMapie +
                 ", id=" + id +
                 ", area=" + area +
+                ", fullarea=" + fullarea +
                 ", name=" + name +
                 '}';
     }

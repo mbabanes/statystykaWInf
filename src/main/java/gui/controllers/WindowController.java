@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-public class WindowController
-{
+public class WindowController {
     @FXML
     private TableView<Province> plantsTable;
 
@@ -57,38 +56,30 @@ public class WindowController
     private DataSetModel dataSetModel;
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         dataSetModel = new DataSetModel();
 
-        try
-        {
+        try {
             dataSetModel.loadData();
             prepareTableView();
             initStageWykres();
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Error: " + e);
         }
     }
 
 
-
     @FXML
-    public void wykresOknoAction()
-    {
+    public void wykresOknoAction() {
         stageWykres.show();
     }
 
     @FXML
-    public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> cell)
-    {
+    public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> cell) {
         String newValue = cell.getNewValue();
         QuantityValueValidator validator = new QuantityValueValidator(newValue);
-        try
-        {
+        try {
             Number value = validator.validate();
             int idPlant = appointIdPlant(cell.getTablePosition().getColumn());
             Province province = cell.getRowValue();
@@ -96,9 +87,7 @@ public class WindowController
             this.dataSetModel.updateDataList(province, value.longValue(), idPlant);
 
             this.wykresController.aktualizujWykres(province.getId());
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             Dialogs.errorDialog("Błąd walidacji, należy podawać liczby całkowite dodatnie.");
         }
 
@@ -106,16 +95,13 @@ public class WindowController
     }
 
 
-
-    private void prepareTableView()
-    {
+    private void prepareTableView() {
         plantsTable.setItems(dataSetModel.getDataList());
         putValuesToEachColumn();
         ustawienieParametrowEdycji();
     }
 
-    private void putValuesToEachColumn()
-    {
+    private void putValuesToEachColumn() {
         QuantityStringPropertyConverter converter = new QuantityStringPropertyConverter();
 
         this.provinceCol.setCellValueFactory(value -> value.getValue().nameProperty());
@@ -144,8 +130,7 @@ public class WindowController
         });
     }
 
-    private void initStageWykres()
-    {
+    private void initStageWykres() {
         stageWykres = new Stage();
         stageWykres.setTitle("Wykresik");
 
@@ -167,10 +152,9 @@ public class WindowController
     }
 
 
-
-    private void ustawienieParametrowEdycji()
-    {
+    private void ustawienieParametrowEdycji() {
         provinceCol.setEditable(true);
+        areaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         wheatCol.setCellFactory(TextFieldTableCell.forTableColumn());
         ryeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         barleyCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -179,9 +163,35 @@ public class WindowController
         sugarBeetsCol.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
-    private int appointIdPlant(int currentColumn)
-    {
+    private int appointIdPlant(int currentColumn) {
         final int columnOffset = 2;
         return currentColumn - columnOffset;
+    }
+
+    @FXML
+    public void edycjaPowierzchniCommit(TableColumn.CellEditEvent<Province, String> cell) {
+        String newValue = cell.getNewValue();
+
+        float dv = 0;
+        try {
+            dv = Float.parseFloat(newValue);
+        } catch (Exception e) {
+            return;
+        }
+
+        if(dv>50)
+            dv = 50;
+
+        if(dv<0)
+            dv = 0;
+
+        Province province = cell.getRowValue();
+
+        province.setArea(dv);
+
+        this.wykresController.zmienKolorWojewodztwa(province.getId());
+
+
+        this.plantsTable.refresh();
     }
 }

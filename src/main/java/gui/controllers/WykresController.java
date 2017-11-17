@@ -39,19 +39,15 @@ public class WykresController {
     private List<Wykres> wykresy;
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
     }
 
-    public WykresController()
-    {
-//        mapaCala = new Image("/img/polskaKolorowa.png");
-//        mapaOryginal = new Image("/img/polskaKolorowa.png");
+    public WykresController() {
+
     }
 
-    public void aktualizujWykres(int index)
-    {
-        mapaCala = new Image("/img/polskaKolorowa.png");
+    public void aktualizujWykres(int index) {
+        mapaCala = new Image("/img/polska_nowa_szara_legenda.png");
 
         //czysci
         wykresy.get(index).czyscWykres();
@@ -75,33 +71,32 @@ public class WykresController {
         imageView.setImage(mapaCala);
     }
 
-    public void dajWykres()
-    {
+    public void dajWykres() {
         wykresy = new ArrayList<>();
 //        mapaCala = new Image("/img/polskaKolorowa.png");
         mapaCala = new Image("/img/polska_nowa_szara_legenda.png");
 
         //inicjuje liste wykresow
-        for (Province p: wojewodztwa) {
+        for (Province p : wojewodztwa) {
             Wykres w = new Wykres(p.getName());
             w.setProvince(p);
             wykresy.add(w);
         }
 
         //dodaje zmienne do wykresu
-        int i=0;
-        for (Province p: wojewodztwa) {
-            wykresy.get(i).dodajWartoscDoWykresu(i,p.getBarley().getName(),p.getBarley().getQuantity());
-            wykresy.get(i).dodajWartoscDoWykresu(i,p.getSugarBeets().getName(),p.getSugarBeets().getQuantity());
-            wykresy.get(i).dodajWartoscDoWykresu(i,p.getWheat().getName(),p.getWheat().getQuantity());
-            wykresy.get(i).dodajWartoscDoWykresu(i,p.getOat().getName(),p.getOat().getQuantity());
-            wykresy.get(i).dodajWartoscDoWykresu(i,p.getPotatoes().getName(),p.getPotatoes().getQuantity());
-            wykresy.get(i).dodajWartoscDoWykresu(i,p.getRye().getName(),p.getRye().getQuantity());
+        int i = 0;
+        for (Province p : wojewodztwa) {
+            wykresy.get(i).dodajWartoscDoWykresu(i, p.getBarley().getName(), p.getBarley().getQuantity());
+            wykresy.get(i).dodajWartoscDoWykresu(i, p.getSugarBeets().getName(), p.getSugarBeets().getQuantity());
+            wykresy.get(i).dodajWartoscDoWykresu(i, p.getWheat().getName(), p.getWheat().getQuantity());
+            wykresy.get(i).dodajWartoscDoWykresu(i, p.getOat().getName(), p.getOat().getQuantity());
+            wykresy.get(i).dodajWartoscDoWykresu(i, p.getPotatoes().getName(), p.getPotatoes().getQuantity());
+            wykresy.get(i).dodajWartoscDoWykresu(i, p.getRye().getName(), p.getRye().getQuantity());
             i++;
         }
 
         //generuje wykresy
-        for (Wykres wp: wykresy) {
+        for (Wykres wp : wykresy) {
             wp.ustawWykres();
             wp.ustawStyl("style.css");
             wp.getBarChart().setPrefHeight(600);
@@ -115,10 +110,10 @@ public class WykresController {
         imageView.setPreserveRatio(true);
 
         //inicjowanie kolorow dla poszczegolnego wojewodztwa
-        Kolor.ustawKoloryPierwotne(mapaCala,wojewodztwa);
+        Kolor.ustawKoloryPierwotne(mapaCala, wojewodztwa);
 
         //ustawia dwa najwieksze plony dla wykresu
-        for (Wykres w:wykresy) {
+        for (Wykres w : wykresy) {
             w.ustawNajwiekszeWartosci();
         }
 
@@ -133,95 +128,90 @@ public class WykresController {
         pomalujWojewodztwa();
     }
 
-    private int xy(int width,double procent)
-    {
-        return (int)((width*procent)/100);
+    private int xy(int width, double procent) {
+        return (int) ((width * procent) / 100);
     }
 
-    private void ustawPlony()
-    {
+    private void ustawPlony() {
         int width = (int) mapaCala.getWidth();
         int height = (int) mapaCala.getHeight();
 
 
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(0).getTop1(),xy(width,15),xy(height,60));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(0).getTop2(),xy(width,20),xy(height,60));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(1).getTop1(),xy(width,38),xy(height,28));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(1).getTop2(),xy(width,43),xy(height,28));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(2).getTop1(),xy(width,6),xy(height,40));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(2).getTop2(),xy(width,11),xy(height,40));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(3).getTop1(),xy(width,80),xy(height,55));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(3).getTop2(),xy(width,85),xy(height,55));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(4).getTop1(),xy(width,47),xy(height,50));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(4).getTop2(),xy(width,52),xy(height,50));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(5).getTop1(),xy(width,56),xy(height,80));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(5).getTop2(),xy(width,61),xy(height,80));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(6).getTop1(),xy(width,62),xy(height,40));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(6).getTop2(),xy(width,67),xy(height,40));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(7).getTop1(),xy(width,32),xy(height,65)); //opol
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(7).getTop2(),xy(width,37),xy(height,65));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(8).getTop1(),xy(width,73),xy(height,75)); //podk
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(8).getTop2(),xy(width,78),xy(height,75));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(9).getTop1(),xy(width,80),xy(height,25));//podl
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(9).getTop2(),xy(width,85),xy(height,25));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(10).getTop1(),xy(width,30),xy(height,10));//pomorsk
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(10).getTop2(),xy(width,35),xy(height,10));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(11).getTop1(),xy(width,40),xy(height,72));//slaskie
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(11).getTop2(),xy(width,45),xy(height,72));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(12).getTop1(),xy(width,60),xy(height,65));//swietokrzy
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(12).getTop2(),xy(width,65),xy(height,65));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(13).getTop1(),xy(width,60),xy(height,15));//warm
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(13).getTop2(),xy(width,65),xy(height,15));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(14).getTop1(),xy(width,25),xy(height,40)); //wlkp
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(14).getTop2(),xy(width,30),xy(height,40));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(15).getTop1(),xy(width,10),xy(height,18));
-        mapaCala =  Kolor.polaczObrazy(mapaCala,wykresy.get(15).getTop2(),xy(width,15),xy(height,18));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(0).getTop1(), xy(width, 15), xy(height, 60));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(0).getTop2(), xy(width, 20), xy(height, 60));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(1).getTop1(), xy(width, 38), xy(height, 28));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(1).getTop2(), xy(width, 43), xy(height, 28));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(2).getTop1(), xy(width, 80), xy(height, 55));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(2).getTop2(), xy(width, 85), xy(height, 55));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(3).getTop1(), xy(width, 6), xy(height, 40));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(3).getTop2(), xy(width, 11), xy(height, 40));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(4).getTop1(), xy(width, 47), xy(height, 50));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(4).getTop2(), xy(width, 52), xy(height, 50));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(5).getTop1(), xy(width, 56), xy(height, 80));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(5).getTop2(), xy(width, 61), xy(height, 80));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(6).getTop1(), xy(width, 62), xy(height, 40));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(6).getTop2(), xy(width, 67), xy(height, 40));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(7).getTop1(), xy(width, 32), xy(height, 65)); //opol
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(7).getTop2(), xy(width, 37), xy(height, 65));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(8).getTop1(), xy(width, 73), xy(height, 75)); //podk
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(8).getTop2(), xy(width, 78), xy(height, 75));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(9).getTop1(), xy(width, 80), xy(height, 25));//podl
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(9).getTop2(), xy(width, 85), xy(height, 25));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(10).getTop1(), xy(width, 30), xy(height, 10));//pomorsk
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(10).getTop2(), xy(width, 35), xy(height, 10));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(11).getTop1(), xy(width, 40), xy(height, 72));//slaskie
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(11).getTop2(), xy(width, 45), xy(height, 72));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(12).getTop1(), xy(width, 60), xy(height, 65));//swietokrzy
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(12).getTop2(), xy(width, 65), xy(height, 65));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(13).getTop1(), xy(width, 60), xy(height, 15));//warm
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(13).getTop2(), xy(width, 65), xy(height, 15));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(14).getTop1(), xy(width, 25), xy(height, 40)); //wlkp
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(14).getTop2(), xy(width, 30), xy(height, 40));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(15).getTop1(), xy(width, 10), xy(height, 18));
+        mapaCala = Kolor.polaczObrazy(mapaCala, wykresy.get(15).getTop2(), xy(width, 15), xy(height, 18));
     }
 
 
-    public void zmienKolorWojewodztwa(int index)
-    {
+    public void zmienKolorWojewodztwa(int index) {
         final double przelicznik = 6.35;
 
         int green = (int) (255 - (przelicznik * wojewodztwa.get(index).areaProperty().get()));
 
-        if(green<0)
-        green = 0;
+        if (green < 0)
+            green = 0;
 
-        if(green>255)
+        if (green > 255)
             green = 255;
 
 
-        Color naKolor = Color.rgb(255,green,index);
+        Color naKolor = Color.rgb(255, green, index);
 
-        mapaCala = Kolor.zmienKolor(mapaCala,wojewodztwa.get(index).getKolorNaMapie(),naKolor);
+        mapaCala = Kolor.zmienKolor(mapaCala, wojewodztwa.get(index).getKolorNaMapie(), naKolor);
         imageView.setImage(mapaCala);
         wojewodztwa.get(index).setKolorNaMapie(naKolor);
     }
 
-    public void pomalujWojewodztwa()
-    {
-        for (int i=0;i<16;i++)
-        {
+    public void pomalujWojewodztwa() {
+        for (int i = 0; i < 16; i++) {
             zmienKolorWojewodztwa(i);
         }
     }
 
     @FXML
-    public void mouseEventMapa(MouseEvent event)
-    {
+    public void mouseEventMapa(MouseEvent event) {
         //rozpoznanie koloru i pokazanie wykresu
         PixelReader pr = mapaCala.getPixelReader();
-        Color c = pr.getColor((int)event.getX(),(int)event.getY());
+        Color c = pr.getColor((int) event.getX(), (int) event.getY());
 
-        Wykres wykres = Kolor.znajdzWykresPoKolorze(wykresy,c);
-       if(wykres != null) {
 
-           if(hbox.getChildren().size()>1)
-            hbox.getChildren().remove(1);
+        Wykres wykres = Kolor.znajdzWykresPoKolorze(wykresy, c);
+        if (wykres != null) {
 
-           hbox.getChildren().add(wykres.getBarChart());
-       }
+            if (hbox.getChildren().size() > 1)
+                hbox.getChildren().remove(1);
+
+            hbox.getChildren().add(wykres.getBarChart());
+        }
     }
 
     public ObservableList<Province> getWojewodztwa() {
@@ -240,8 +230,7 @@ public class WykresController {
         this.stage = stage;
     }
 
-    private void initKolory()
-    {
+    private void initKolory() {
         wojewodztwa.get(0).setKolorNaMapie(new Color(0.24313725531101227, 0.9764705896377563, 0.27843138575553894, 1.0));
         wojewodztwa.get(1).setKolorNaMapie(new Color(0.7450980544090271, 0.9921568632125854, 0.3764705955982208, 1.0));
         wojewodztwa.get(2).setKolorNaMapie(new Color(0.8823529481887817, 0.8549019694328308, 0.3333333432674408, 1.0));
@@ -261,7 +250,6 @@ public class WykresController {
         wojewodztwa.get(14).setKolorNaMapie(new Color(0.9803921580314636, 0.5686274766921997, 0.5529412031173706, 1.0));
         wojewodztwa.get(15).setKolorNaMapie(new Color(0.545098066329956, 0.8745098114013672, 0.9725490212440491, 1.0));
     }
-
 
 
 }
