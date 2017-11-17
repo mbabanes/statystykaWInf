@@ -53,6 +53,7 @@ public class DataPresenterLoader
         wykresController.setWojewodztwa(woj);
         wykresController.setStage(stage);
         wykresController.dajWykres();
+
         stage.setScene(new Scene(pane));
     }
 
@@ -79,20 +80,12 @@ public class DataPresenterLoader
         return wykresController;
     }
 
-    public void setWykresController(WykresController wykresController)
-    {
-        this.wykresController = wykresController;
-    }
 
     public Stage getStage()
     {
         return stage;
     }
 
-    public void setStage(Stage stage)
-    {
-        this.stage = stage;
-    }
 
     public StatisticsController getStatisticsController()
     {
