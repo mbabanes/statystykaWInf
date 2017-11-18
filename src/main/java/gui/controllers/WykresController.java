@@ -69,6 +69,10 @@ public class WykresController {
 
 
         imageView.setImage(mapaCala);
+
+        //inicjowanie kolorow dla poszczegolnego wojewodztwa
+//        Kolor.ustawKoloryPierwotne(mapaCala, wojewodztwa);
+        pomalujWojewodztwa();
     }
 
     public void dajWykres() {
@@ -119,9 +123,6 @@ public class WykresController {
 
         //dodanie plonów na mapie głównej
         ustawPlony();
-
-
-//        mapaCala = Kolor.zmienKolor(mapaCala,wojewodztwa.get(0).getKolorNaMapie(),Color.rgb(234,12,24));
 
         imageView.setImage(mapaCala);
 
@@ -183,12 +184,14 @@ public class WykresController {
         if (green > 255)
             green = 255;
 
-
         Color naKolor = Color.rgb(255, green, index);
 
+        mapaCala = Kolor.zmienKolor(mapaCala, wojewodztwa.get(index).getKolorSzary(), naKolor);
         mapaCala = Kolor.zmienKolor(mapaCala, wojewodztwa.get(index).getKolorNaMapie(), naKolor);
+
         imageView.setImage(mapaCala);
         wojewodztwa.get(index).setKolorNaMapie(naKolor);
+
     }
 
     public void pomalujWojewodztwa() {

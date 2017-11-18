@@ -63,11 +63,9 @@ public class Kolor {
 
     public static void ustawKoloryPierwotne(Image image, List<Province> woj)
     {
-        PixelReader pixelReader = image.getPixelReader();
-
-
         int i = 200;
         for (Province p: woj ) {
+            p.setKolorSzary(Color.rgb(i,i,i));
             p.setKolorNaMapie(Color.rgb(i,i,i));
             i++;
         }

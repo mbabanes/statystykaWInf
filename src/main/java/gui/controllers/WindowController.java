@@ -172,10 +172,13 @@ public class WindowController {
     public void edycjaPowierzchniCommit(TableColumn.CellEditEvent<Province, String> cell) {
         String newValue = cell.getNewValue();
 
+        newValue = newValue.replace(',','.');
+
         float dv = 0;
         try {
             dv = Float.parseFloat(newValue);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
