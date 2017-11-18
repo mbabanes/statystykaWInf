@@ -70,6 +70,7 @@ public class WykresController {
 
 
         imageView.setImage(mapaCala);
+        pomalujWojewodztwa();
     }
 
     public void dajWykres() {
@@ -187,6 +188,7 @@ public class WykresController {
 
         Color naKolor = Color.rgb(255, green, index);
 
+        mapaCala = Kolor.zmienKolor(mapaCala, wojewodztwa.get(index).getKolorSzary(), naKolor);
         mapaCala = Kolor.zmienKolor(mapaCala, wojewodztwa.get(index).getKolorNaMapie(), naKolor);
         imageView.setImage(mapaCala);
         wojewodztwa.get(index).setKolorNaMapie(naKolor);

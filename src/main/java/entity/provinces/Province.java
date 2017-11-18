@@ -22,6 +22,7 @@ private int id;
     private ObjectProperty<Plant> potatoes = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> sugarBeets = new SimpleObjectProperty<>();
     private Color kolorNaMapie;
+    private Color kolorSzary;
 
 
     private FloatProperty area = new SimpleFloatProperty();
@@ -278,6 +279,14 @@ private int id;
 
     public void setFullarea(float fullarea) {
         this.fullarea.set(fullarea);
+    }
+
+    public Color getKolorSzary() {
+        return kolorSzary;
+    }
+
+    public void setKolorSzary(Color kolorSzary) {
+        this.kolorSzary = kolorSzary;
     }
 
     @Override

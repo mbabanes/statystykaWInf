@@ -69,6 +69,7 @@ public class Kolor {
         int i = 200;
         for (Province p: woj ) {
             p.setKolorNaMapie(Color.rgb(i,i,i));
+            p.setKolorSzary(Color.rgb(i,i,i));
             i++;
         }
     }
