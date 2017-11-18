@@ -12,6 +12,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -22,7 +23,7 @@ public class WykresController {
 
 
     @FXML
-    private AnchorPane pane;
+    private Pane pane;
     @FXML
     private ImageView img;
     @FXML
@@ -212,6 +213,9 @@ public class WykresController {
 
             hbox.getChildren().add(wykres.getBarChart());
         }
+        hbox.setVisible(true);
+        hbox.setFillHeight(true);
+//        hbox.setPrefWidth();
     }
 
     public ObservableList<Province> getWojewodztwa() {
