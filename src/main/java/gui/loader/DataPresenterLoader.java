@@ -18,7 +18,7 @@ public class DataPresenterLoader
 {
     private WykresController wykresController;
     private StatisticsController statisticsController;
-    private Stage stage;
+    public static Stage stage;
     private ObservableList<Province> provinces;
 
     private TabPane tabPane;
@@ -54,7 +54,9 @@ public class DataPresenterLoader
         wykresController.setStage(stage);
         wykresController.dajWykres();
 
-        stage.setScene(new Scene(pane));
+        Scene sc = new Scene(pane);
+        System.out.println(sc.getWidth());
+        stage.setScene(sc);
     }
 
 

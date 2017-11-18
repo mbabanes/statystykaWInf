@@ -6,7 +6,6 @@ import gui.controllers.utill.QuantityStringPropertyConverter;
 import gui.controllers.utill.QuantityValueValidator;
 import gui.loader.DataPresenterLoader;
 import gui.model.DataSetModel;
-import gui.model.StatisticsModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -93,7 +92,8 @@ public class WindowController
         try
         {
             Number value = validator.validate();
-            int idPlant = appointIdPlant(cell.getTablePosition().getColumn());
+            int currentColumn = cell.getTablePosition().getColumn();
+            int idPlant = appointIdPlant(currentColumn);
             Province province = cell.getRowValue();
 
             this.dataSetModel.updateDataList(province, value.longValue(), idPlant);

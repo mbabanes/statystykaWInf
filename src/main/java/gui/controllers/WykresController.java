@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import entity.provinces.Province;
+import gui.loader.DataPresenterLoader;
 import gui.obrazy.Kolor;
 import gui.wykresy.Wykres;
 import javafx.collections.ObservableList;
@@ -214,10 +215,15 @@ public class WykresController {
                 hbox.getChildren().remove(1);
 
             hbox.getChildren().add(wykres.getBarChart());
+//            DataPresenterLoader.stage.sizeToScene();
+//            System.out.println(stage);
+            System.out.println(stage.getScene().getWidth());
         }
         hbox.setVisible(true);
         hbox.setFillHeight(true);
+//        hbox.getParent().getParent().
 //        hbox.setPrefWidth();
+
     }
 
     public ObservableList<Province> getWojewodztwa() {
