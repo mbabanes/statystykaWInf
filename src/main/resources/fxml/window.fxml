@@ -7,19 +7,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.WindowController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="659.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.WindowController">
    <children>
-      <HBox alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
+      <HBox VBox.vgrow="ALWAYS">
          <children>
-            <TableView fx:id="plantsTable" editable="true" prefHeight="500.0" prefWidth="1136.0" HBox.hgrow="ALWAYS">
+            <TableView fx:id="plantsTable" editable="true" HBox.hgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="provinceCol" editable="false" minWidth="-1.0" prefWidth="-1.0" text="Województwo" />
-                  <TableColumn fx:id="areaColumn" minWidth="-1.0" onEditCommit="#edycjaPowierzchniCommit" prefWidth="-1.0" text="Powierzchnia (Ha)" />
-                <TableColumn fx:id="wheatCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="-1.0" text="Pszenica" />
-                  <TableColumn fx:id="ryeCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="-1.0" text="Żyto" />
-                  <TableColumn fx:id="barleyCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="-1.0" text="Jęczmień" />
-                  <TableColumn fx:id="oatsCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="-1.0" text="Owies" />
+                  <TableColumn fx:id="areaColumn" minWidth="-1.0" onEditCommit="#edycjaPowierzchniCommit" prefWidth="86.0" text="Powierzchnia (Ha)" />
+                <TableColumn fx:id="wheatCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="110.0" text="Pszenica" />
+                  <TableColumn fx:id="ryeCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="116.0" text="Żyto" />
+                  <TableColumn fx:id="barleyCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="104.0" text="Jęczmień" />
+                  <TableColumn fx:id="oatsCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="193.0" text="Owies" />
                   <TableColumn fx:id="potatoesCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="-1.0" text="Ziemniaki" />
                   <TableColumn fx:id="sugarBeetsCol" minWidth="-1.0" onEditCommit="#editPlantValuesCommit" prefWidth="-1.0" text="Buraki Cukrowe" />
               </columns>
@@ -29,7 +28,7 @@
             </TableView>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" spacing="10.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="1192.0" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#wykresOknoAction" prefHeight="25.0" prefWidth="104.0" text="Pokaż wykres" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Opcje" />
