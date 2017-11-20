@@ -19,11 +19,10 @@ public class DescStats
     }
 
 
-
     public List<Number> means()
     {
         List<Number> meansOfPlants = new ArrayList<>();
-        descriptiveStatisticsList.forEach(stats ->{
+        descriptiveStatisticsList.forEach(stats -> {
             meansOfPlants.add(stats.getMean());
         });
 
@@ -75,16 +74,161 @@ public class DescStats
         return medians;
     }
 
+    public List<Number> q1Percentiles()
+    {
+        return percentiles(0.25);
+    }
+
+    public List<Number> q3Percentiles()
+    {
+
+        return percentiles(0.75);
+    }
+
+
+    public List<Number> standardDeviations()
+    {
+        List<Number> standardDeviations = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats ->
+        {
+            standardDeviations.add(stats.getStandardDeviation());
+        });
+
+        return standardDeviations;
+    }
+
+    public List<Number> variances()
+    {
+        List<Number> variances = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats ->
+        {
+            variances.add(stats.getVariance());
+        });
+
+        return variances;
+    }
+
+    public List<Number> gaps()
+    {
+        List<Number> gap = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats ->
+        {
+            gap.add(stats.getMax() - stats.getMin());
+        });
+
+        return gap;
+    }
+
+    public List<Number> iqrs()
+    {
+        return countIQRs();
+    }
+
+    public List<Number> averageAbsoluteDeviations()
+    {
+        return countAverageAbsoluteDeviations();
+    }
+
+    public List<Number> quarterDeviations()
+    {
+        return countQuarterDeviations();
+    }
+
+    public  List<Number> coefficientOfVariations()
+    {
+        return countCoefficientVariations();
+    }
+
+
+    private List<Number> percentiles(double p)
+    {
+        List<Number> q = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats -> {
+            q.add(stats.getPercentile(p));
+        });
+
+        return q;
+    }
+
+    private List<Number> countIQRs()
+    {
+        List<Number> iqrs = new ArrayList<>();
+        List<Number> q1 = q1Percentiles();
+        List<Number> q3 = q3Percentiles();
+
+        for (int i = 0; i < 6; i++)
+        {
+            iqrs.add(q3.get(i).longValue() - q1.get(i).longValue());
+        }
+
+        return iqrs;
+    }
+
+    private List<Number> countAverageAbsoluteDeviations()
+    {
+        List<Number> means = means();
+        List<Number> averageAbsoluteDeviations = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++)
+        {
+            double abd = averageAbsoluteDeviations(descriptiveStatisticsList.get(i).getValues(), means.get(i).doubleValue());
+            averageAbsoluteDeviations.add(abd);
+        }
+        return averageAbsoluteDeviations;
+    }
+
+    private List<Number> countQuarterDeviations()
+    {
+        List<Number> iqrs = iqrs();
+        List<Number> quarterDeviations = new ArrayList<>();
+
+        iqrs.forEach(iqr -> {
+            quarterDeviations.add( ( 0.5*iqr.longValue() ));
+        });
+
+        return quarterDeviations;
+    }
+
+
     protected double countHarmonicMean(double[] data)
     {
         double sum = 0;
 
         for (int i = 0; i < data.length; i++)
         {
-            sum += 1/data[i];
+            sum += 1 / data[i];
         }
 
-        return (data.length)/sum;
+        return (data.length) / sum;
+    }
+
+
+    private List<Number> countCoefficientVariations()
+    {
+        List<Number> standardDeviations = standardDeviations();
+        List<Number> means = means();
+
+        List<Number> cov = new ArrayList<>();
+        for (int i = 0; i < 6; i++)
+        {
+            double std = standardDeviations.get(i).doubleValue();
+            double mean = means.get(i).doubleValue();
+            cov.add(std/mean);
+        }
+
+        return cov;
+    }
+
+
+    private double averageAbsoluteDeviations(double[] data, double mean)
+    {
+        double sum = 0;
+        for (int i = 0; i < data.length; i++)
+        {
+            sum += Math.abs(data[i] - mean);
+        }
+
+        return sum/data.length;
     }
 
     private void prepare()

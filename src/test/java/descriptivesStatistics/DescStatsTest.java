@@ -63,7 +63,6 @@ public class DescStatsTest
         {
             System.out.println(geoMean);
         });
-
     }
 
 
@@ -102,5 +101,62 @@ public class DescStatsTest
         });
     }
 
+    @Test
+    public void whenDoQ1AndQ3PercentilesThenReturnListOfThatForEachProvinceForEachPlant()
+    {
+        List<Number> q1 = descStats.q1Percentiles();
+        assertEquals(6, q1.size());
 
+        q1.forEach(q ->
+        {
+            System.out.println(NumberFormat.getIntegerInstance().format(q));
+        });
+
+        List<Number> q3 = descStats.q3Percentiles();
+
+        assertEquals(6, q3.size());
+    }
+
+    @Test
+    public void whenDoStandardDeviationsThenReturnListOfThatForEachPlant()
+    {
+        List<Number> standardDeviations = descStats.standardDeviations();
+        assertEquals(6, standardDeviations.size());
+    }
+
+    @Test
+    public void whenDoVariancesThenReturnListOfThatForEachPlant()
+    {
+        List<Number> variances = descStats.variances();
+        assertEquals(6, variances.size());
+    }
+
+    @Test
+    public void whenDoGapsThenReturnGapsForeachPlant()
+    {
+        List<Number> gaps = descStats.gaps();
+        assertEquals(6, gaps.size());
+    }
+
+    @Test
+    public void whenDoIqrsThenReturnIqrsForEachPlant()
+    {
+        List<Number> iqrs = descStats.iqrs();
+        assertEquals(6, iqrs.size());
+    }
+
+
+    @Test
+    public void whenDoAverageAbsoluteDeviationsThenReturnListOFThatForEachPlant()
+    {
+        List<Number> averageAbsoluteDeviations = descStats.averageAbsoluteDeviations();
+        assertEquals(6, averageAbsoluteDeviations.size());
+    }
+
+    @Test
+    public void whenDoQuarterDeviationsThenReturnThatForEachPlant()
+    {
+        List<Number> quarterDeviations = descStats.quarterDeviations();
+        assertEquals(6, quarterDeviations.size());
+    }
 }
