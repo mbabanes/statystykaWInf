@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 
 public class DescStatsTest
 {
+    private static final int EXPECTED = 6;
     private DescStats descStats;
 
     @Before
@@ -47,7 +48,7 @@ public class DescStatsTest
     public void whenInvokeCountMeanThenReturnMean()
     {
         List<Number> meansOfPlantsInCountry = descStats.means();
-        assertEquals(6, meansOfPlantsInCountry.size());
+        assertEquals(EXPECTED, meansOfPlantsInCountry.size());
         meansOfPlantsInCountry.forEach(mean ->
         {
             System.out.println(mean);
@@ -58,7 +59,7 @@ public class DescStatsTest
     public void whenCountGeoMeanThenReturnListOfThatForEachPlant()
     {
         List<Number> geoMeansOfPlants = descStats.geometricMeans();
-        assertEquals(6, geoMeansOfPlants.size());
+        assertEquals(EXPECTED, geoMeansOfPlants.size());
         geoMeansOfPlants.forEach(geoMean ->
         {
             System.out.println(geoMean);
@@ -80,7 +81,7 @@ public class DescStatsTest
     {
         List<Number> harmonicMeans = descStats.harmonicMeans();
 
-        assertEquals(6, harmonicMeans.size());
+        assertEquals(EXPECTED, harmonicMeans.size());
     }
 
     @Test
@@ -88,7 +89,7 @@ public class DescStatsTest
     {
         List<Number> quadraticMeans = descStats.quadraticMeans();
 
-        assertEquals(6, quadraticMeans.size());
+        assertEquals(EXPECTED, quadraticMeans.size());
     }
 
     @Test
@@ -105,7 +106,7 @@ public class DescStatsTest
     public void whenDoQ1AndQ3PercentilesThenReturnListOfThatForEachProvinceForEachPlant()
     {
         List<Number> q1 = descStats.q1Percentiles();
-        assertEquals(6, q1.size());
+        assertEquals(EXPECTED, q1.size());
 
         q1.forEach(q ->
         {
@@ -114,35 +115,35 @@ public class DescStatsTest
 
         List<Number> q3 = descStats.q3Percentiles();
 
-        assertEquals(6, q3.size());
+        assertEquals(EXPECTED, q3.size());
     }
 
     @Test
     public void whenDoStandardDeviationsThenReturnListOfThatForEachPlant()
     {
         List<Number> standardDeviations = descStats.standardDeviations();
-        assertEquals(6, standardDeviations.size());
+        assertEquals(EXPECTED, standardDeviations.size());
     }
 
     @Test
     public void whenDoVariancesThenReturnListOfThatForEachPlant()
     {
         List<Number> variances = descStats.variances();
-        assertEquals(6, variances.size());
+        assertEquals(EXPECTED, variances.size());
     }
 
     @Test
     public void whenDoGapsThenReturnGapsForeachPlant()
     {
         List<Number> gaps = descStats.gaps();
-        assertEquals(6, gaps.size());
+        assertEquals(EXPECTED, gaps.size());
     }
 
     @Test
     public void whenDoIqrsThenReturnIqrsForEachPlant()
     {
         List<Number> iqrs = descStats.iqrs();
-        assertEquals(6, iqrs.size());
+        assertEquals(EXPECTED, iqrs.size());
     }
 
 
@@ -150,13 +151,20 @@ public class DescStatsTest
     public void whenDoAverageAbsoluteDeviationsThenReturnListOFThatForEachPlant()
     {
         List<Number> averageAbsoluteDeviations = descStats.averageAbsoluteDeviations();
-        assertEquals(6, averageAbsoluteDeviations.size());
+        assertEquals(EXPECTED, averageAbsoluteDeviations.size());
     }
 
     @Test
     public void whenDoQuarterDeviationsThenReturnThatForEachPlant()
     {
         List<Number> quarterDeviations = descStats.quarterDeviations();
-        assertEquals(6, quarterDeviations.size());
+        assertEquals(EXPECTED, quarterDeviations.size());
+    }
+
+    @Test
+    public void whenDocoefficientOfVariationsThenReturnListOfThat()
+    {
+        List<Number> cot = descStats.coefficientOfVariations();
+        assertEquals(EXPECTED, cot.size());
     }
 }

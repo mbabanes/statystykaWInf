@@ -76,13 +76,13 @@ public class DescStats
 
     public List<Number> q1Percentiles()
     {
-        return percentiles(0.25);
+        return percentiles(25);
     }
 
     public List<Number> q3Percentiles()
     {
 
-        return percentiles(0.75);
+        return percentiles(75);
     }
 
 
@@ -233,27 +233,27 @@ public class DescStats
 
     private void prepare()
     {
-        DescriptiveStatistics wheatStats = new DescriptiveStatistics();
         DescriptiveStatistics barleyStats = new DescriptiveStatistics();
         DescriptiveStatistics oatStats = new DescriptiveStatistics();
         DescriptiveStatistics potatoesStats = new DescriptiveStatistics();
         DescriptiveStatistics ryeStats = new DescriptiveStatistics();
         DescriptiveStatistics sugarBeetsStats = new DescriptiveStatistics();
+        DescriptiveStatistics wheatStats = new DescriptiveStatistics();
 
         provinces.forEach(province -> {
-            wheatStats.addValue(province.getWheat().getQuantity());
             barleyStats.addValue(province.getBarley().getQuantity());
             oatStats.addValue(province.getOat().getQuantity());
             potatoesStats.addValue(province.getPotatoes().getQuantity());
             ryeStats.addValue(province.getRye().getQuantity());
             sugarBeetsStats.addValue(province.getSugarBeets().getQuantity());
+            wheatStats.addValue(province.getWheat().getQuantity());
         });
 
-        descriptiveStatisticsList.add(wheatStats);
         descriptiveStatisticsList.add(barleyStats);
         descriptiveStatisticsList.add(oatStats);
         descriptiveStatisticsList.add(potatoesStats);
         descriptiveStatisticsList.add(ryeStats);
         descriptiveStatisticsList.add(sugarBeetsStats);
+        descriptiveStatisticsList.add(wheatStats);
     }
 }

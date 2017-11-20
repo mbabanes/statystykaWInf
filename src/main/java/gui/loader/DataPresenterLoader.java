@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -67,9 +68,11 @@ public class DataPresenterLoader
         {
             statisticsController = new StatisticsController(provinces);
             loader.setController(statisticsController);
-            Pane pane = loader.load();
+            VBox pane = loader.load();
 //            statisticsController.initialize();
+            pane.setFillWidth(true);
             this.tabPane.getTabs().get(1).setContent(pane);
+
         }
         catch (IOException e)
         {
