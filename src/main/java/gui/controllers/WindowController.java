@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Comparator;
+import java.util.List;
 
 public class WindowController
 {
@@ -126,6 +128,30 @@ public class WindowController
     private void putValuesToEachColumn()
     {
         QuantityStringPropertyConverter converter = new QuantityStringPropertyConverter();
+        Comparator<String> comparator = (x, y) ->{
+        Number n = null;
+        Number n2 = null;
+        try
+        {
+            n = NumberFormat.getNumberInstance().parse(x);
+            n2 = NumberFormat.getNumberInstance().parse(y);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        return Long.compare(n.longValue(), n2.longValue());
+    };
+
+        this.wheatCol.setComparator(comparator);
+        List<?> listCol = this.plantsTable.getColumns();
+        for (int i = 1; i < listCol.size(); i++)
+        {
+            TableColumn<Province,String> col = (TableColumn) listCol.get(i);
+            col.setComparator(comparator);
+        }
 
         this.provinceCol.setCellValueFactory(value -> value.getValue().nameProperty());
         this.areaColumn.setCellValueFactory(value -> {
@@ -136,9 +162,13 @@ public class WindowController
         this.wheatCol.setCellValueFactory(value -> {
             return converter.convert(value.getValue().getWheat());
         });
+
         this.ryeCol.setCellValueFactory(value -> {
             return converter.convert(value.getValue().getRye());
         });
+
+
+
         this.barleyCol.setCellValueFactory(value -> {
             return converter.convert(value.getValue().getBarley());
         });
