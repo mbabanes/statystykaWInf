@@ -12,8 +12,7 @@ import java.util.List;
 
 public abstract class Province
 {
-//    private String name;
-private int id;
+    private int id;
     private List<Plant> listOfPlant;
     private ObjectProperty<Plant> wheat = new SimpleObjectProperty<>();
     private ObjectProperty<Plant> rye = new SimpleObjectProperty<>();
@@ -29,13 +28,12 @@ private int id;
     private FloatProperty fullarea = new SimpleFloatProperty();
 
 
-
     private StringProperty name = new SimpleStringProperty();
 
 
     public static Province createProvince(String name)
     {
-        switch(name.toUpperCase())
+        switch (name.toUpperCase())
         {
             case "DOLNOŚLĄSKIE":
             {
@@ -246,11 +244,13 @@ private int id;
         this.sugarBeets.set(sugarBeets);
     }
 
-    public Color getKolorNaMapie() {
+    public Color getKolorNaMapie()
+    {
         return kolorNaMapie;
     }
 
-    public void setKolorNaMapie(Color kolorNaMapie) {
+    public void setKolorNaMapie(Color kolorNaMapie)
+    {
         this.kolorNaMapie = kolorNaMapie;
     }
 
@@ -269,28 +269,34 @@ private int id;
         this.area.set(area);
     }
 
-    public float getFullarea() {
+    public float getFullarea()
+    {
         return fullarea.get();
     }
 
-    public FloatProperty fullareaProperty() {
+    public FloatProperty fullareaProperty()
+    {
         return fullarea;
     }
 
-    public void setFullarea(float fullarea) {
+    public void setFullarea(float fullarea)
+    {
         this.fullarea.set(fullarea);
     }
 
-    public Color getKolorSzary() {
+    public Color getKolorSzary()
+    {
         return kolorSzary;
     }
 
-    public void setKolorSzary(Color kolorSzary) {
+    public void setKolorSzary(Color kolorSzary)
+    {
         this.kolorSzary = kolorSzary;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Province{" +
                 "listOfPlant=" + listOfPlant +
                 ", wheat=" + wheat +
