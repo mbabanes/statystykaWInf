@@ -2,10 +2,11 @@ package gui.controllers;
 
 import entity.provinces.Province;
 import gui.controllers.utill.Dialogs;
+import gui.controllers.utill.PlantsValuesComparator;
 import gui.controllers.utill.QuantityStringPropertyConverter;
 import gui.controllers.utill.QuantityValueValidator;
 import gui.loader.DataPresenterLoader;
-import gui.model.DataSetModel;
+import gui.model.PlantsDataModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -20,7 +21,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Comparator;
 import java.util.List;
 
 public class WindowController
@@ -56,18 +56,18 @@ public class WindowController
 
     private Stage stageWykres;
 
-    private DataSetModel dataSetModel;
+    private PlantsDataModel plantsDataModel;
 
     private DataPresenterLoader dataPresenterLoader;
 
     @FXML
     public void initialize()
     {
-        dataSetModel = new DataSetModel();
+        plantsDataModel = new PlantsDataModel();
 
         try
         {
-            dataSetModel.loadData();
+            plantsDataModel.loadData();
             prepareTableView();
             initStageWykres();
 
@@ -77,7 +77,6 @@ public class WindowController
             System.out.println("Error: " + e);
         }
     }
-
 
 
     @FXML
@@ -90,18 +89,20 @@ public class WindowController
     public void editPlantValuesCommit(TableColumn.CellEditEvent<Province, String> cell)
     {
         String newValue = cell.getNewValue();
-        QuantityValueValidator validator = new QuantityValueValidator(newValue);
+        QuantityValueValidator validator = new QuantityValueValidator();
         try
         {
-            Number value = validator.validate();
+            Number value = validator.validate(newValue);
             int currentColumn = cell.getTablePosition().getColumn();
-            int idPlant = appointIdPlant(currentColumn);
+            int idPlant = appointIdPlantBy(currentColumn);
             Province province = cell.getRowValue();
 
-            this.dataSetModel.updateDataList(province, value.longValue(), idPlant);
+            this.plantsDataModel.updateDataList(province, value.longValue(), idPlant);
 
             refreshStatistics(province.getId());
-        } catch (ParseException e) {
+        }
+        catch (ParseException e)
+        {
             Dialogs.errorDialog("Błąd walidacji, należy podawać liczby całkowite dodatnie.");
         }
 
@@ -112,46 +113,21 @@ public class WindowController
     private void refreshStatistics(int idProvince)
     {
         this.wykresController.aktualizujWykres(idProvince);
-//        this.wykresController.zmienKolorWojewodztwa(idProvince);
         this.dataPresenterLoader.getStatisticsController().refresh();
-
     }
 
 
     private void prepareTableView()
     {
-        plantsTable.setItems(dataSetModel.getDataList());
+        plantsTable.setItems(plantsDataModel.getDataList());
         putValuesToEachColumn();
-        ustawienieParametrowEdycji();
+        makeSortingByNumber();
+        makeRowsEditable();
     }
 
     private void putValuesToEachColumn()
     {
         QuantityStringPropertyConverter converter = new QuantityStringPropertyConverter();
-        Comparator<String> comparator = (x, y) ->{
-        Number n = null;
-        Number n2 = null;
-        try
-        {
-            n = NumberFormat.getNumberInstance().parse(x);
-            n2 = NumberFormat.getNumberInstance().parse(y);
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-
-
-        return Long.compare(n.longValue(), n2.longValue());
-    };
-
-        this.wheatCol.setComparator(comparator);
-        List<?> listCol = this.plantsTable.getColumns();
-        for (int i = 1; i < listCol.size(); i++)
-        {
-            TableColumn<Province,String> col = (TableColumn) listCol.get(i);
-            col.setComparator(comparator);
-        }
 
         this.provinceCol.setCellValueFactory(value -> value.getValue().nameProperty());
         this.areaColumn.setCellValueFactory(value -> {
@@ -160,42 +136,51 @@ public class WindowController
             return areaValue;
         });
         this.wheatCol.setCellValueFactory(value -> {
-            return converter.convert(value.getValue().getWheat());
+            return converter.convertPlantToStringProperty(value.getValue().getWheat());
         });
 
         this.ryeCol.setCellValueFactory(value -> {
-            return converter.convert(value.getValue().getRye());
+            return converter.convertPlantToStringProperty(value.getValue().getRye());
         });
-
-
 
         this.barleyCol.setCellValueFactory(value -> {
-            return converter.convert(value.getValue().getBarley());
+            return converter.convertPlantToStringProperty(value.getValue().getBarley());
         });
         this.oatsCol.setCellValueFactory(value -> {
-            return converter.convert(value.getValue().getOat());
+            return converter.convertPlantToStringProperty(value.getValue().getOat());
         });
         this.potatoesCol.setCellValueFactory(value -> {
-            return converter.convert(value.getValue().getPotatoes());
+            return converter.convertPlantToStringProperty(value.getValue().getPotatoes());
         });
         this.sugarBeetsCol.setCellValueFactory(value -> {
-            return converter.convert(value.getValue().getSugarBeets());
+            return converter.convertPlantToStringProperty(value.getValue().getSugarBeets());
         });
+    }
+
+    private void makeSortingByNumber()
+    {
+        List<?> listCol = this.plantsTable.getColumns();
+        for (int i = 1; i < listCol.size(); i++)
+        {
+            TableColumn<Province, String> col = (TableColumn) listCol.get(i);
+            col.setComparator(new PlantsValuesComparator());
+        }
     }
 
     private void initStageWykres()
     {
-        dataPresenterLoader = new DataPresenterLoader(dataSetModel.getDataList());
-        dataPresenterLoader.loadWykresWindow();
+        dataPresenterLoader = new DataPresenterLoader(plantsDataModel.getDataList());
+        dataPresenterLoader.loadMapTab();
+
         stageWykres = dataPresenterLoader.getStage();
         wykresController = dataPresenterLoader.getWykresController();
 
-        dataPresenterLoader.loadStatisticWindow();
+        dataPresenterLoader.loadStatisticTab();
+        dataPresenterLoader.loadCorrelationTab();
     }
 
 
-
-    private void ustawienieParametrowEdycji()
+    private void makeRowsEditable()
     {
         provinceCol.setEditable(true);
         areaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -207,29 +192,33 @@ public class WindowController
         sugarBeetsCol.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
-    private int appointIdPlant(int currentColumn)
+    private int appointIdPlantBy(int currentColumn)
     {
         final int columnOffset = 2;
         return currentColumn - columnOffset;
     }
 
     @FXML
-    public void edycjaPowierzchniCommit(TableColumn.CellEditEvent<Province, String> cell) {
+    public void edycjaPowierzchniCommit(TableColumn.CellEditEvent<Province, String> cell)
+    {
         String newValue = cell.getNewValue();
 
-        newValue = newValue.replace(',','.');
+        newValue = newValue.replace(',', '.');
 
         float dv = 0;
-        try {
+        try
+        {
             dv = Float.parseFloat(newValue);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return;
         }
 
-        if(dv>50)
+        if (dv > 50)
             dv = 50;
 
-        if(dv<0)
+        if (dv < 0)
             dv = 0;
 
         Province province = cell.getRowValue();

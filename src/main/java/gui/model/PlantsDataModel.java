@@ -10,10 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DataSetModel
+public class PlantsDataModel
 {
     ObservableList<Province> dataList = FXCollections.observableArrayList();
-
 
 
     public void loadData() throws IOException
