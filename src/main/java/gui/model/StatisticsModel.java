@@ -2,10 +2,7 @@ package gui.model;
 
 import descriptivesStatistics.DescStats;
 import entity.provinces.Province;
-import gui.controllers.utill.QuantityStringPropertyConverter;
 import gui.model.entityFx.Statistic;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -42,11 +39,16 @@ public class StatisticsModel
         putStats("Kwantyl Q3", descStats.q3Percentiles());
         putStats("Odchylenie standardowe", descStats.standardDeviations());
         putStats("Wariancja", descStats.variances());
-        putStats("Rozstęp", descStats.gaps());
+        putStats("Rozstęp", descStats.intervals());
         putStats("Rozstęp ćwiartkowy (IQR)", descStats.iqrs());
         putStats("Średnie odchylenie bezwzględne", descStats.averageAbsoluteDeviations());
         putStats("Odchylenie ćwiartkowe", descStats.quarterDeviations());
         putStats("Współczynnik zmienności", descStats.coefficientOfVariations());
+        putStats("Współczynnik Giniego", descStats.gini());
+        putKurtosis(descStats.kurtosis());
+        putStats("Współczynnik skośności", descStats.biases());
+        putStats("Trzeci moment centralny", descStats.thirdCentralMoments());
+        putStats("Współczynnik asymetrii", descStats.asymmetricCoefficients());
     }
 
 
@@ -54,6 +56,8 @@ public class StatisticsModel
     {
         return descriptiveStatisticObservableList;
     }
+
+
 
     private void putStats(String nameOfStat, List<Number> values)
     {
@@ -72,5 +76,34 @@ public class StatisticsModel
     private String formattedValue(double value)
     {
         return NumberFormat.getNumberInstance().format(value);
+    }
+
+    private void putKurtosis(List<Number> values)
+    {
+        Statistic stats = new Statistic();
+
+        stats.setNameOfStat("Kurtoza");
+        stats.setBarleyValue(getKurtozisLabel(values.get(0).doubleValue()));
+        stats.setOatValue(getKurtozisLabel(values.get(1).doubleValue()));
+        stats.setPotatoesValue(getKurtozisLabel(values.get(2).doubleValue()));
+        stats.setRyeValue(getKurtozisLabel(values.get(3).doubleValue()));
+        stats.setSugarBeetsValue(getKurtozisLabel(values.get(4).doubleValue()));
+        stats.setWheatValue(getKurtozisLabel(values.get(5).doubleValue()));
+
+        descriptiveStatisticObservableList.add(stats);
+    }
+
+    private String getKurtozisLabel(double value)
+    {
+
+        if (value > 0)
+        {
+            return "Leptokurtyczny";
+        } else if (value < 0)
+        {
+            return "Platykurtyczny";
+        }else
+            return "Mezokurtyczny";
+
     }
 }

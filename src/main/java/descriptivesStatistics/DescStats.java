@@ -108,15 +108,15 @@ public class DescStats
         return variances;
     }
 
-    public List<Number> gaps()
+    public List<Number> intervals()
     {
-        List<Number> gap = new ArrayList<>();
+        List<Number> intervals = new ArrayList<>();
         descriptiveStatisticsList.forEach(stats ->
         {
-            gap.add(stats.getMax() - stats.getMin());
+            intervals.add(stats.getMax() - stats.getMin());
         });
 
-        return gap;
+        return intervals;
     }
 
     public List<Number> iqrs()
@@ -134,9 +134,61 @@ public class DescStats
         return countQuarterDeviations();
     }
 
-    public  List<Number> coefficientOfVariations()
+    public List<Number> coefficientOfVariations()
     {
         return countCoefficientVariations();
+    }
+
+
+    public List<Number> gini()
+    {
+        return countGini();
+    }
+
+
+    public List<Number> kurtosis()
+    {
+        List<Number> kurtosis = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats -> {
+            kurtosis.add(countKurt(stats));
+        });
+
+        return kurtosis;
+    }
+
+
+    public List<Number> biases()
+    {
+        List<Number> biases = new ArrayList<>();
+
+        descriptiveStatisticsList.forEach(stats -> {
+            biases.add(coutnBiases(stats));
+        });
+
+        return biases;
+
+    }
+
+
+    public List<Number> thirdCentralMoments()
+    {
+        List<Number> thirdCentralMoments = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats -> {
+            thirdCentralMoments.add(countThirdCentralMoment(stats));
+        });
+
+        return thirdCentralMoments;
+    }
+
+
+    public List<Number> asymmetricCoefficients()
+    {
+        List<Number> asymmetricCoefficients = new ArrayList<>();
+        descriptiveStatisticsList.forEach(stats -> {
+            asymmetricCoefficients.add(countAsymmetricCoefficient(stats));
+        });
+
+        return asymmetricCoefficients;
     }
 
 
@@ -183,7 +235,7 @@ public class DescStats
         List<Number> quarterDeviations = new ArrayList<>();
 
         iqrs.forEach(iqr -> {
-            quarterDeviations.add( ( 0.5*iqr.longValue() ));
+            quarterDeviations.add((0.5 * iqr.longValue()));
         });
 
         return quarterDeviations;
@@ -213,7 +265,7 @@ public class DescStats
         {
             double std = standardDeviations.get(i).doubleValue();
             double mean = means.get(i).doubleValue();
-            cov.add(std/mean);
+            cov.add(std / mean);
         }
 
         return cov;
@@ -228,7 +280,91 @@ public class DescStats
             sum += Math.abs(data[i] - mean);
         }
 
-        return sum/data.length;
+        return sum / data.length;
+    }
+
+
+    private List<Number> countGini()
+    {
+        List<Number> ginis = new ArrayList<>();
+
+        descriptiveStatisticsList.forEach(descriptiveStatistics ->
+        {
+            ginis.add(countGiniFor(descriptiveStatistics));
+        });
+
+        return ginis;
+    }
+
+    private double countGiniFor(DescriptiveStatistics barleyStats)
+    {
+        double[] data = barleyStats.getValues();
+        final int N = data.length;
+
+        double sum = 0.0;
+        for (int i = 0; i < data.length; i++)
+        {
+            sum += (2 * (i + 1) - N - 1) * data[i];
+        }
+
+        double mean = barleyStats.getMean();
+        double mian = N * N * mean;
+
+        double gini = sum / mian;
+        return gini;
+    }
+
+    private double countKurt(DescriptiveStatistics data)
+    {
+        double[] x = data.getValues();
+        double mean = data.getMean();
+        double sum = 0.0;
+
+
+        for (int i = 0; i < x.length; i++)
+        {
+            sum += Math.pow((x[i] - mean), 4);
+        }
+
+        final double N = x.length;
+        double dividedByN = sum / N;
+
+        double standardDeviation = data.getStandardDeviation();
+        double dividedByStandardDeviation = dividedByN / Math.pow(standardDeviation, 4);
+        return dividedByStandardDeviation - 3;
+    }
+
+
+    private double coutnBiases(DescriptiveStatistics stats)
+    {
+        double mean = stats.getMean();
+        double median = stats.getPercentile(50);
+        double standardDeviation = stats.getStandardDeviation();
+        return 3 * (mean - median) / standardDeviation;
+    }
+
+    private double countThirdCentralMoment(DescriptiveStatistics stats)
+    {
+        double[] x = stats.getValues();
+        double mean = stats.getMean();
+        double sum = 0.0;
+
+        for (int i = 0; i < x.length; i++)
+        {
+            sum += Math.pow((x[i] - mean), 3);
+        }
+
+        final int N = x.length;
+
+        return sum / N;
+    }
+
+
+    private double countAsymmetricCoefficient(DescriptiveStatistics stats)
+    {
+        double standardDeviation = stats.getStandardDeviation();
+        double m3 = countThirdCentralMoment(stats);
+        return m3 / Math.pow(standardDeviation, 4);
     }
 
     private void prepare()

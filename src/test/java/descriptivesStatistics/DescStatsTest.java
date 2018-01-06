@@ -108,10 +108,10 @@ public class DescStatsTest
         List<Number> q1 = descStats.q1Percentiles();
         assertEquals(EXPECTED, q1.size());
 
-        q1.forEach(q ->
-        {
-            System.out.println(NumberFormat.getIntegerInstance().format(q));
-        });
+//        q1.forEach(q ->
+//        {
+//            System.out.println(NumberFormat.getIntegerInstance().format(q));
+//        });
 
         List<Number> q3 = descStats.q3Percentiles();
 
@@ -135,7 +135,7 @@ public class DescStatsTest
     @Test
     public void whenDoGapsThenReturnGapsForeachPlant()
     {
-        List<Number> gaps = descStats.gaps();
+        List<Number> gaps = descStats.intervals();
         assertEquals(EXPECTED, gaps.size());
     }
 
@@ -166,5 +166,42 @@ public class DescStatsTest
     {
         List<Number> cot = descStats.coefficientOfVariations();
         assertEquals(EXPECTED, cot.size());
+    }
+
+    @Test
+    public void gini()
+    {
+        List<Number> gins = descStats.gini();
+        assertEquals(EXPECTED, gins.size());
+
+//        gins.forEach(gin -> System.out.println(gin));
+    }
+
+    @Test
+    public void kurtosis()
+    {
+        List<Number> kurtosis = descStats.kurtosis();
+        assertEquals(EXPECTED, kurtosis.size());
+    }
+
+    @Test
+    public void bias()
+    {
+        List<Number> bieses = descStats.biases();
+        assertEquals(EXPECTED, bieses.size());
+    }
+
+    @Test
+    public void thirdCentralMoment()
+    {
+        List<Number> thirdCentralMoments = descStats.thirdCentralMoments();
+        assertEquals(EXPECTED, thirdCentralMoments.size());
+    }
+
+    @Test
+    public void asymmetricCoefficient()
+    {
+        List<Number> asymmetricCoefficient = descStats.asymmetricCoefficients();
+        assertEquals(EXPECTED, asymmetricCoefficient.size());
     }
 }
