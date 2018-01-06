@@ -4,7 +4,6 @@ import entity.plants.Plant;
 import entity.provinces.Province;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataParser
 {
@@ -45,13 +44,13 @@ public class DataParser
 
         for (int i = 1; i < this.dataFromCSV.size(); i++)
         {
-            data.add( createDataRow(i) );
+            data.add( createDataRowByLine(i) );
         }
 
         return data;
     }
 
-    private Province createDataRow(int i)
+    private Province createDataRowByLine(int i)
     {
         String[] dataLine = takeLine(i);
         return  createProvince(dataLine, i);
