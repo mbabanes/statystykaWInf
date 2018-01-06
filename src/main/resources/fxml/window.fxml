@@ -3,13 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="659.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.WindowController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="659.0" prefWidth="1212.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.WindowController">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -19,10 +20,8 @@
                </font>
             </Label>
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
       </HBox>
+      <Separator prefWidth="200.0" />
       <HBox VBox.vgrow="ALWAYS">
          <children>
             <TableView fx:id="plantsTable" editable="true" prefHeight="547.0" prefWidth="1192.0" HBox.hgrow="ALWAYS">
@@ -41,21 +40,23 @@
                </columnResizePolicy>
             </TableView>
          </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="1192.0" spacing="10.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="1192.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#wykresOknoAction" prefHeight="25.0" prefWidth="104.0" text="Pokaż wykres" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Opcje" />
+            <Button mnemonicParsing="false" onAction="#wykresOknoAction" prefHeight="31.0" prefWidth="188.0" text="Pokaż statystyki" />
          </children>
          <VBox.margin>
             <Insets />
          </VBox.margin>
          <padding>
-            <Insets right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
    </children>
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets top="15.0" />
    </padding>
 </VBox>
