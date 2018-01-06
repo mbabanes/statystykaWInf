@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WykresController {
-
-
     @FXML
     private Pane pane;
     @FXML
@@ -34,8 +32,11 @@ public class WykresController {
     private Button btn;
     @FXML
     private HBox hbox;
+
+
     private Image mapaCala;
     private Image mapaOryginal;
+
     @FXML
     private ImageView imageView;
     private List<Wykres> wykresy;

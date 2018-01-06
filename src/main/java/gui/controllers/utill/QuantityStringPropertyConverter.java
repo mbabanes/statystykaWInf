@@ -23,7 +23,7 @@ public class QuantityStringPropertyConverter
     }
 
 
-    public StringProperty convert(Plant value)
+    public StringProperty convertPlantToStringProperty(Plant value)
     {
         this.plant = value;
 

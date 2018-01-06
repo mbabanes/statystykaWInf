@@ -11,16 +11,16 @@ public class QuantityValueValidator
     private String value;
     private Number valueAsNumber;
 
-    public QuantityValueValidator(String value)
+    public QuantityValueValidator()
     {
-        this.value = value;
-        changeSpaceToNonBreakingSpace();
     }
 
 
 
-    public Number validate() throws ParseException
+    public Number validate(String value) throws ParseException
     {
+        this.value = value;
+        changeSpaceToNonBreakingSpace();
         return parseValue();
     }
 
