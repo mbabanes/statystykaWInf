@@ -17,9 +17,9 @@ public class QuantityValueValidatorTest
     public void whenPutSomeNumberAsStringThenReturnNumberValue() throws ParseException
     {
         String numberAsString = "123";
-        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(numberAsString);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator();
 
-        Number actual = quantityValueValidator.validate();
+        Number actual = quantityValueValidator.validate(numberAsString);
         Number expected = new Integer(123);
 
         assertEquals(expected.intValue(), actual.intValue());
@@ -29,9 +29,9 @@ public class QuantityValueValidatorTest
     public void whenPutSomeNumberWithSpaceThenReturnNumberValue() throws ParseException
     {
         String numberInFormat = "12 333";
-        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(numberInFormat);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator();
 
-        Number actual = quantityValueValidator.validate();
+        Number actual = quantityValueValidator.validate(numberInFormat);
         int expected = 12333;
 
         assertEquals(expected, actual.intValue());
@@ -41,17 +41,17 @@ public class QuantityValueValidatorTest
     public void whenPutSomeLettersThenThrowParseException() throws ParseException
     {
         String letters = "asdwqe";
-        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(letters);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator();
         expectedException.expect(ParseException.class);
-        quantityValueValidator.validate();
+        quantityValueValidator.validate(letters);
     }
 
     @Test
     public void whenPutNumberLessThanZeroThenThrowParseException() throws ParseException
     {
         String numberLessThanZero = "-12";
-        QuantityValueValidator quantityValueValidator = new QuantityValueValidator(numberLessThanZero);
+        QuantityValueValidator quantityValueValidator = new QuantityValueValidator();
         expectedException.expect(ParseException.class);
-        quantityValueValidator.validate();
+        quantityValueValidator.validate(numberLessThanZero);
     }
 }
